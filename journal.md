@@ -23,3 +23,17 @@ What's left for me to do on the overall roadmap is:
 ## 1/7/24
 
 Unfortunately for me, that strapi tutorial is very old, so the svelte stuff is quite outdated. I'll still be able to use it to interface with strapi (kind of) but for svelte, I'm kind of on my own. So I rebuilt the svelte part from scratch, and started on a very basic skeleton. I think my goal for next time will be to get a skeleton for displaying a blog post working. From there I can spend all the time in the world styling! (not fun)
+
+## 1/13/24
+
+Today I started working on getting my page view working. As I'm getting started though I start asking myself some questions, like "how am I going to connect my frontend to the backend?" There appear to be a few ways I could do it. I think since I'm going to be taking advantage of sveltekit, I should probably use serverside rendering and treat strapi like it's a database. Although, I feel like I actual want to use strapi like a web api because that's really how it should be used. But I' think I'm still going to do serverside rendering because that makes sense for my app
+
+I also learned about [pm2](https://github.com/Unitech/pm2/), a process manager that will make keeping both my sveltekit project and my strapi project running in parallel.
+
+Okay, so after working some more I made some good progress. I was able to add in my api token to a src/lib/server/secrets.ts file. This is really neat beacuse it will only resolve if I try ti import it into server code, it's completely safe from leaking to the client. This also means I can use localhost to resolve the backend, if I wanted to I could make it so that it isn't even accessible by the internet. That kind of defeats the purpose, but maybe I will haha. 
+
+After I got that working I was able to add a page.server.ts to my posts/\[slug\] path (the brackets allow variable path names). THis means that the server will retrieve the post information and then send it to the client.
+
+THat was great and all, but the json payload we get back from strapi is quite dense. I'd like to be able to autocomplete it with types (you know, the whole point of TS???) However, they don't have a builtin way of doing that?? very strange to me. However, this is a workaround that works pretty good. I followed this guide [here](https://strapi.io/blog/improve-your-frontend-experience-with-strapi-types-and-type-script) Ignore all the stuff about setting up and just follow the steps below. Essentially, Strapi will generate types to be used internally and we can copy those types and bring them over to our frontend. with the use of some clever filtering we can get rid of all the strapi specific metadata and just get our sweet sweet types. Now all I have to do when I change the schema is just run my little script `yarn run copytypes` and blamo, I get updated usable types in the frontend.
+
+Now my next challenge will be writing a rich text renderer. My article body is rich text, which translates to a somewhat complicated json object. I can potentially find someone else's and just use it, but I hope it won't be too difficult for me to just write. THat would make a good article at least!
