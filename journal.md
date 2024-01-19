@@ -37,3 +37,11 @@ After I got that working I was able to add a page.server.ts to my posts/\[slug\]
 THat was great and all, but the json payload we get back from strapi is quite dense. I'd like to be able to autocomplete it with types (you know, the whole point of TS???) However, they don't have a builtin way of doing that?? very strange to me. However, this is a workaround that works pretty good. I followed this guide [here](https://strapi.io/blog/improve-your-frontend-experience-with-strapi-types-and-type-script) Ignore all the stuff about setting up and just follow the steps below. Essentially, Strapi will generate types to be used internally and we can copy those types and bring them over to our frontend. with the use of some clever filtering we can get rid of all the strapi specific metadata and just get our sweet sweet types. Now all I have to do when I change the schema is just run my little script `yarn run copytypes` and blamo, I get updated usable types in the frontend.
 
 Now my next challenge will be writing a rich text renderer. My article body is rich text, which translates to a somewhat complicated json object. I can potentially find someone else's and just use it, but I hope it won't be too difficult for me to just write. THat would make a good article at least!
+
+## 1/16/24
+
+Today I started on the rich text renderer. I got the image, paragraph, and @apply in sveltekitheading tags done. I just have to do list and code.
+
+## 1/18/24
+
+Today I finished the rich text renderer. At least, the most basic version of it. It was pretty simple but now I have to do the hard part of styling it. I was originally planning on using tailwind css here, but that might not work great for me. If I can figure out how to use the @apply syntax in my code (see PostBody.svelete) then it might work. But if I can't figure it out next Time I'm going to have to remove tailwind and just do it the old fashioned way.
