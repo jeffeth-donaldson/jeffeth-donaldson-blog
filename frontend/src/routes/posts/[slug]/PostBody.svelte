@@ -1,6 +1,8 @@
 <script lang="ts">
+    import Highlight from "svelte-highlight";
+    import { typescript, java, c, csharp, python, javascript, xml, bash, gradle } from "svelte-highlight/languages";
     interface richTextBlock {
-        type:"image" | "link" | "paragraph" | "quote" | "heading" | "list" | "text" | "list-item",
+        type:"image" | "link" | "paragraph" | "quote" | "heading" | "list" | "text" | "list-item" | "code",
         children:any[]
     }
     interface paragraphBlock extends richTextBlock {
@@ -49,7 +51,7 @@
         url:string
     }
     export let content:richTextBlock[];
-    console.log(content[0].children)
+
 
     function renderRichText(blocks:richTextBlock[]) {
         let res = "";
@@ -58,7 +60,12 @@
             switch (block.type) {
                 case "image":
                     const image = block as imageBlock;
-                    res+=`<img src=${image.image.url} alt=${image.image.alternativeText}>`;
+                    res+=`
+                    <div class='image'>
+                    <img src=${image.image.url} alt=${image.image.alternativeText}>
+                    <p>${image.image.caption ? image.image.caption : ''}</p>
+                    </div>
+                    `;
                     break;
                 case "link":
                     const link = block as linkBlock;
@@ -68,7 +75,7 @@
                     res+=`<p>\n${renderRichText(block.children)}</p>\n`;
                     break;
                 case "quote":
-                    res+=`<div class='rich-text-quote'>\n${renderRichText(block.children)}</div>\n`;
+                    res+=`<div class='rich-text-quote'><div>\n${renderRichText(block.children)}</div></div>\n`;
                     break;
                 case "heading":
                     const heading = block as headingBlock;
@@ -107,6 +114,9 @@
                 case "list-item":
                     res+= `<li>${renderRichText(block.children)}</li>\n`
                     break;
+                case "code":
+                    res+= `<Highlight language={xml} code={}/>}`
+                    break;
                 default:
                     console.log(block.type)
                     console.log(block)
@@ -116,15 +126,56 @@
         return res
     }
 
+    let res = "";
+    res += renderRichText(content);
+
 </script>
 
-<style>
-    .post-body h1 {
-        @apply text-3xl font-bold;
+<style lang="postcss">
+    .post-body {
+        background-color: var(--tertiary-bg);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: background 0.3s;
+        width: 95%;
+        font-size: 1.1em;
+    }
+
+    :global(.post-body h1) {
+        color: var(--accent-color-secondary)
+    }
+
+    :global(.post-body h2, h3, h4, h5, h6) {
+        color: var(--accent-color-tertiary)
+    }
+
+    :global(.post-body .image) {
+        display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+        width: 100%;
+    }
+
+    :global(.post-body .rich-text-quote) {
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        width:100%;
+    }
+    
+    :global(.post-body .rich-text-quote div) {
+        background-color: var(--secondary-bg);
+        max-width: 75%;
+        border-left: 4px solid var(--accent-color-primary); /* Left border color (adjust as needed) */
+        padding: 15px; /* Padding inside the quote div */
+        margin: 15px 0; /* Margin around the quote div */
+        font-style: italic; /* Italicize the text for a quote effect */
     }
 
 </style>
 
-<div class="post-body">
-    {@html renderRichText(content)}
+<div class="post-body" contenteditable="false" bind:innerHTML={res}>
+    <!-- {@html renderRichText(content)} -->
 </div>

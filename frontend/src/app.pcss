@@ -1,4 +1,63 @@
 /* Write your global styles here, in PostCSS syntax */
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
+
+:root {
+    --primary-bg: #f8f8f8;
+    --secondary-bg: #f0f0f0; /* Light gray */
+    --tertiary-bg: #e6e6e6; /* Lighter gray */
+    
+    
+    --text-color: #333;
+    
+    
+    --accent-color-primary: #386641; /* Green */
+    --accent-color-secondary: #6a994e; /* Yellow */
+    --accent-color-tertiary: #a7c957; /* Blue */
+
+    --accent-color-yes: #a7c957
+    --accent-color-no: #bc4749
+    
+    --link-color: #007BFF;
+    
+    
+    --code-font: 'Fira Code', monospace;
+    --text-font: 'Roboto', sans-serif;
+}
+
+@media(prefers-color-scheme: dark) {
+    :root {
+        --primary-bg: #121212;
+        --secondary-bg: #232323; /* Dark gray */
+        --tertiary-bg: #1f1f1f; /* Darker gray */
+
+        --text-color: #fff;
+
+        --link-color: #61dafb;
+
+        --accent-color-primary: #a7c957; /* Green */
+        --accent-color-secondary: #6a994e; /* Yellow */
+        --accent-color-tertiary: #386641; /* Blue */
+    }
+}
+  
+  body {
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+    font-family: var(--text-font);
+  }
+
+  code {
+    font-family: var(--code-font);
+  }
+  
+  
+  a {
+    color: var(--link-color);
+    transition: color 0.3s;
+  }
+  
+  /* Additional styling for buttons, headers, etc. can be added here using the color variables */
+  
