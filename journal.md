@@ -44,8 +44,12 @@ Today I started on the rich text renderer. I got the image, paragraph, and @appl
 
 ## 1/18/24
 
-Today I finished the rich text renderer. At least, the most basic version of it. It was pretty simple but now I have to do the hard part of styling it. I was originally planning on using tailwind css here, but that might not work great for me. If I can figure out how to use the @apply syntax in my code (see PostBody.svelete) then it might work. But if I can't figure it out next Time I'm going to have to remove tailwind and just do it the old fashioned way.
+Today I finished the rich text renderer. At least, the most basic version of it. It was pretty simple but now I have to do the hard part of styling it. I was originally planning on using tailwind css here, but that might not work great for me. If I can figure out how to use the @apply syntax in my code (see PostBody.svelte) then it might work. But if I can't figure it out next Time I'm going to have to remove tailwind and just do it the old fashioned way.
 
 ## 1/20/24
 
 Today I got started on styling. I made a bunch of progress, but I've hit a snag. I need to get something that can highlight code snippets for me, but right now I don't have anything that can do that. I think i'll have to use [https://highlightjs.org/](https://highlightjs.org/) if I don't want to have to redo any work. But I do have a lot of the styling for the blog post done. I also need to handle the background image as well as images in the post that are too large and need to be sized down.
+
+## 1/22/24
+
+Well, I have struck out on the whole code highlighting thing. So what I'm going to have to do is transpose my javascript function into a pure svelte component. There are definitely some nasty things about it, like declaring a bunch of variables of which most are useless. But aside from that, it will allow me to use the svelte component code highlighter. The reason it wasn't working was because my svelte component's css was taking precedence over the highlighter's css. Also, it wasn't sanitizing my inputs so it was seeing my elements inside \<pre\> elements as actual html.

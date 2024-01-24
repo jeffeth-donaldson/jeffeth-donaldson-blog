@@ -1,55 +1,7 @@
 <script lang="ts">
     import Highlight from "svelte-highlight";
     import { typescript, java, c, csharp, python, javascript, xml, bash, gradle } from "svelte-highlight/languages";
-    interface richTextBlock {
-        type:"image" | "link" | "paragraph" | "quote" | "heading" | "list" | "text" | "list-item" | "code",
-        children:any[]
-    }
-    interface paragraphBlock extends richTextBlock {
-        type:"paragraph",
-    }
-    interface textBlock extends richTextBlock {
-        type:'text',
-        text:string,
-        bold?:boolean,
-        italic?:boolean,
-        underline?:boolean,
-        strikethrough?:boolean
-        code?:boolean
-    }
-    interface imageBlock extends richTextBlock {
-        type:'image',
-        image: {
-            name: string,
-            alternativeText: string,
-            url: string,
-            caption:string,
-            width: number,
-            height: number,
-            formats: any[],
-            hash: string,
-            ext: string,
-            mime: string,
-            size: number,
-            previewUrl: string|null,
-            provider: string,
-            provider_metadata: any|null,
-            createdAt: string,
-            updatedAt: string
-        }
-    }
-    interface headingBlock extends richTextBlock {
-        type:'heading',
-        level: number
-    }
-    interface listBlock extends richTextBlock {
-        type:'list',
-        format:'ordered'|'unordered'
-    }
-    interface linkBlock extends richTextBlock {
-        type:'link',
-        url:string
-    }
+    import type { richTextBlock, imageBlock, linkBlock, headingBlock, listBlock, textBlock } from "$lib/types/richTextBlock";
     export let content:richTextBlock[];
 
 
@@ -115,7 +67,7 @@
                     res+= `<li>${renderRichText(block.children)}</li>\n`
                     break;
                 case "code":
-                    res+= `<Highlight language={xml} code={}/>}`
+                    res+= `<Highlight language={xml} code=${renderRichText(block.children)}/>`
                     break;
                 default:
                     console.log(block.type)
