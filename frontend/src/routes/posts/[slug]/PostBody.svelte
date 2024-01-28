@@ -1,8 +1,8 @@
 <script lang="ts">
-    import Highlight from "svelte-highlight";
-    import { typescript, java, c, csharp, python, javascript, xml, bash, gradle } from "svelte-highlight/languages";
     import type { richTextBlock, imageBlock, linkBlock, headingBlock, listBlock, textBlock } from "$lib/types/richTextBlock";
+    import RichTextBlock from './RichTextBlock.svelte';
     export let content:richTextBlock[];
+
 
 
     function renderRichText(blocks:richTextBlock[]) {
@@ -67,6 +67,7 @@
                     res+= `<li>${renderRichText(block.children)}</li>\n`
                     break;
                 case "code":
+                    console.log(block.children)
                     res+= `<Highlight language={xml} code=${renderRichText(block.children)}/>`
                     break;
                 default:
@@ -128,6 +129,10 @@
 
 </style>
 
-<div class="post-body" contenteditable="false" bind:innerHTML={res}>
-    <!-- {@html renderRichText(content)} -->
+<!-- <div class="post-body" contenteditable="false" bind:innerHTML={res}></div> -->
+
+<div class="post-body">
+    {#each content as block}
+    <RichTextBlock block={block}/>
+    {/each}
 </div>

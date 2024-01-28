@@ -53,3 +53,7 @@ Today I got started on styling. I made a bunch of progress, but I've hit a snag.
 ## 1/22/24
 
 Well, I have struck out on the whole code highlighting thing. So what I'm going to have to do is transpose my javascript function into a pure svelte component. There are definitely some nasty things about it, like declaring a bunch of variables of which most are useless. But aside from that, it will allow me to use the svelte component code highlighter. The reason it wasn't working was because my svelte component's css was taking precedence over the highlighter's css. Also, it wasn't sanitizing my inputs so it was seeing my elements inside \<pre\> elements as actual html.
+
+## 1/27/24
+
+Haha! I have done it, I have rewritten my big function that made the html in sveltese. It honestly wasn't that bad. I'm not really missing out on too much. There were some weird bugs at the end with minor syntax issues, but I've got it working. I'm starting to see that svelte really needs a bit more maturity that react.js has. It'll get there eventually though. THat's all I really have time for today so I'll see you guys in the next one. Oh, it's important to **NOT** import svelte components in the `{}` for some reason. IDK why, but it won't work otherwise.

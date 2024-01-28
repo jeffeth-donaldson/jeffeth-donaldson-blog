@@ -1,8 +1,6 @@
 <script lang="ts">
-    import { Highlight } from "svelte-highlight";
-    import { typescript, java, c, csharp, python, javascript, xml } from "svelte-highlight/languages";
+    import { HighlightAuto } from "svelte-highlight";
     import type { richTextBlock, imageBlock, linkBlock, headingBlock, listBlock, textBlock } from "$lib/types/richTextBlock";
-	import { children } from "svelte/internal";
 
     export let block:richTextBlock;
     let image:imageBlock;
@@ -10,36 +8,28 @@
     let heading:headingBlock;
     let myList:listBlock;
     let text:textBlock;
+    let code:String;
 
-    switch (block.type) {
-                case "image":
-                    image = block as imageBlock;
-                    break;
-                case "link":
-                    link = block as linkBlock;
-                    break;
-                case "paragraph":
-                    break;
-                case "quote":
-                    break;
-                case "heading":
-                    heading = block as headingBlock;
-                    break;
-                case "list":
-                    myList = block as listBlock;
-                    break;
-                case "text":
-                    text = block as textBlock;
-                    break;
-                case "list-item":
-                    break;
-                case "code":
-                    break;
-                default:
-                    console.log(block.type)
-                    console.log(block)
-                    break;
-            }
+    if (block.type === "image") {
+        image = block as imageBlock;
+    } else if (block.type === "link") {
+        link = block as linkBlock;
+    } else if (block.type === "heading") {
+        heading = block as headingBlock;
+    } else if (block.type === "list") {
+        myList = block as listBlock;
+    } else if (block.type === "text") {
+        text = block as textBlock;
+    } else if (block.type === "code") {
+        let codeBodyBlock = block.children[0] as textBlock;
+        code = codeBodyBlock.text;
+    } else if (block.type === "paragraph" || block.type === "quote" || block.type === "list-item") {
+        // Do nothing for these block types
+    } else {
+        console.log(block.type);
+        console.log(block);
+    }
+
 </script>
 
 {#if block.type == "image"}
@@ -53,4 +43,58 @@
         <svelte:self block={child}/>
     {/each}
     </a>
+{:else if block.type == "paragraph"}
+    <p>
+        {#each block.children as child}
+            <svelte:self block={child}/>
+        {/each}
+    </p>
+{:else if block.type == "quote"}
+    <div class='rich-text-quote'>
+        {#each block.children as child}
+        <div><svelte:self block={child}/></div>
+        {/each}
+    </div>
+{:else if block.type == "heading"}
+    <svelte:element this={"h"+heading.level}>
+        {#each heading.children as child}
+        <svelte:self block={child}/>
+        {/each}
+    </svelte:element>
+{:else if block.type == "list"}
+    {#if myList.format == 'ordered'}
+        <ol>
+            {#each myList.children as child}
+            <svelte:self block={child}/>
+            {/each}
+        </ol>
+    {:else}
+        <ul>
+            {#each myList.children as child}
+            <svelte:self block={child}/>
+            {/each}
+        </ul>
+    {/if}
+{:else if block.type == "text"}
+    {#if text.bold}
+        <b>{text.text}</b>
+    {:else if text.italic}
+        <i>{text.text}</i>
+    {:else if text.underline}
+        <u>{text.text}</u>
+    {:else if text.strikethrough}
+        <s>{text.text}</s>
+    {:else if text.code}
+        <code>{text.text}</code>
+    {:else}
+        {text.text}
+    {/if}
+{:else if block.type == "list-item"}
+    <li>
+        {#each block.children as child}
+        <svelte:self block={child}/>
+        {/each}
+    </li>
+{:else if block.type == "code"}
+    <HighlightAuto code={code}/>
 {/if}
