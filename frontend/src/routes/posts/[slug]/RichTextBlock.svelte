@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { HighlightAuto } from "svelte-highlight";
     import type { richTextBlock, imageBlock, linkBlock, headingBlock, listBlock, textBlock } from "$lib/types/richTextBlock";
+	import CodeBlock from "./CodeBlock.svelte";
 
     export let block:richTextBlock;
     let image:imageBlock;
@@ -96,5 +96,5 @@
         {/each}
     </li>
 {:else if block.type == "code"}
-    <HighlightAuto code={code}/>
+    <CodeBlock code={code}/>
 {/if}

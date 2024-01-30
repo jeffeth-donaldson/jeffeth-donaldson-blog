@@ -57,3 +57,10 @@ Well, I have struck out on the whole code highlighting thing. So what I'm going 
 ## 1/27/24
 
 Haha! I have done it, I have rewritten my big function that made the html in sveltese. It honestly wasn't that bad. I'm not really missing out on too much. There were some weird bugs at the end with minor syntax issues, but I've got it working. I'm starting to see that svelte really needs a bit more maturity that react.js has. It'll get there eventually though. THat's all I really have time for today so I'll see you guys in the next one. Oh, it's important to **NOT** import svelte components in the `{}` for some reason. IDK why, but it won't work otherwise.
+
+## 1/30/24
+
+Today I continued work on the code block.
+I wanted to add a "copy to clipboard" button and work on the styling a bit. I think I've got it where I like it now, it will change style from light to dark mode and I have a little button. I just need to now make it say that the code was copied when you click on it and I think I'm good. 
+
+Next up is working on the site header I think.
