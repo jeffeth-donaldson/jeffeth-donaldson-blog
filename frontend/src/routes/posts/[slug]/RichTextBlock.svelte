@@ -1,6 +1,8 @@
 <script lang="ts">
     import type { richTextBlock, imageBlock, linkBlock, headingBlock, listBlock, textBlock } from "$lib/types/richTextBlock";
+	import { stringify } from "postcss";
 	import CodeBlock from "./CodeBlock.svelte";
+	import { strapi_url } from "$lib/client/constants";
 
     export let block:richTextBlock;
     let image:imageBlock;
@@ -8,10 +10,15 @@
     let heading:headingBlock;
     let myList:listBlock;
     let text:textBlock;
-    let code:String;
+    let code:string;
+    let url:string
 
     if (block.type === "image") {
         image = block as imageBlock;
+        url = image.image.formats.medium ? image.image.formats.medium.url : image.image.url
+        if (url.startsWith('/')) {
+            url = strapi_url+url;
+        }
     } else if (block.type === "link") {
         link = block as linkBlock;
     } else if (block.type === "heading") {
@@ -34,7 +41,7 @@
 
 {#if block.type == "image"}
     <div class='image'>
-        <img src={image.image.url} alt={image.image.alternativeText}>
+        <img src={url} alt={image.image.alternativeText}>
         <p>{image.image.caption ? image.image.caption : ''}</p>
     </div>
 {:else if block.type == "link"}

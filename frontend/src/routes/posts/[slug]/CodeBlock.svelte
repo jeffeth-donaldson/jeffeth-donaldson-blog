@@ -14,7 +14,7 @@
         buttonClass = 'clicked';
         setTimeout(function () {
             buttonClass = '';
-        }, 300);
+        }, 400);
         if (navigator.clipboard) {
             await navigator.clipboard.writeText(code);
         }
@@ -33,12 +33,19 @@
         });
     });
 </script>
-
-<div class="code-block">
-    <div class="banner">
-        <button on:click={copyCode} class={buttonClass}>Copy Code</button>
+<div class="code-block-container">
+    <div class="code-block">
+        <div class="banner">
+            <button on:click={copyCode} class={buttonClass}>
+                {#if buttonClass == "clicked"}
+                Copied!
+                {:else}
+                Copy Code
+                {/if}
+            </button>
+        </div>
+        <HighlightAuto code={code}/>
     </div>
-    <HighlightAuto code={code}/>
 </div>
 
 <svelte:head>
@@ -48,12 +55,21 @@
 </svelte:head>
 
 <style>
+    .code-block-container {
+        display:flex;
+        flex-direction: row;
+        justify-content: center;
+        width:100%;
+        
+    }
     .code-block {
+        flex-grow: 1;
         background-color: var(--secondary-bg);
         display:flex;
         flex-direction: column;
         padding: 0.5em;
         border-radius: 20px;
+        max-width: 60em;
     }
 
     .banner {

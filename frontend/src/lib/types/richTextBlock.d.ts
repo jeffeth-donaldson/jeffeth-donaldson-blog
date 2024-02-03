@@ -1,3 +1,5 @@
+import type { image } from "./imageTypes"
+
 export interface richTextBlock {
     type:"image" | "link" | "paragraph" | "quote" | "heading" | "list" | "text" | "list-item" | "code",
     children:richTextBlock[]
@@ -16,24 +18,7 @@ export interface textBlock extends richTextBlock {
 }
 export interface imageBlock extends richTextBlock {
     type:'image',
-    image: {
-        name: string,
-        alternativeText: string,
-        url: string,
-        caption:string,
-        width: number,
-        height: number,
-        formats: any[],
-        hash: string,
-        ext: string,
-        mime: string,
-        size: number,
-        previewUrl: string|null,
-        provider: string,
-        provider_metadata: any|null,
-        createdAt: string,
-        updatedAt: string
-    }
+    image: image
 }
 export interface headingBlock extends richTextBlock {
     type:'heading',
