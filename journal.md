@@ -64,3 +64,11 @@ Today I continued work on the code block.
 I wanted to add a "copy to clipboard" button and work on the styling a bit. I think I've got it where I like it now, it will change style from light to dark mode and I have a little button. I just need to now make it say that the code was copied when you click on it and I think I'm good. 
 
 Next up is working on the site header I think.
+
+## 2/3/24
+
+Today I worked on the cover image for the blog post as well as tweaked the copy code button. The cover image has this nice gradient into the title of the article. Something odd is that image urls sometimes have the name of the strapi server in them, but other times do not. So I need to be able to dynamically add that if need be. To do so, I created a constants.ts file in a client dir in the lib dir. I also added some types for images since they are pretty complex objects. Oh! also, apparently images aren't included by default in api requests, you need to add `populate=*` to the query params to get everything. Honestly, kind of annoying but whatever.
+
+## 2/6/24
+
+Today I did a bit of styling on the header, and then realized it is kind of pointless to work on it until I finish some more pages. So I started work on the posts page. I created a search bar and then also got the serverside typescript for getting the list of posts. I'll have to add sorting and searching later. I also started using fontawesome for my icons. They look nice and will be quick to  get set up on my page. You just add a script to your page's header and you are off to the races. 
