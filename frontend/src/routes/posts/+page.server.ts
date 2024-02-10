@@ -10,7 +10,7 @@ export async function load({ fetch }) {
     });
     if (res.status < 300) {
         const item = await res.json() as APIResponseCollection<"api::blog-post.blog-post">;
-        return { post:item.data };
+        return { posts:item.data };
     } else {
         error(404, 'Post Not found')
     }

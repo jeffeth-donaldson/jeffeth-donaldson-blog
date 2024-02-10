@@ -1,12 +1,22 @@
-<script>
-    export let data;
-    // TODO: Create post tile component to display information about the post
-    let searchText = '';
+<script lang="ts">
+import type { PageData } from "./$types";
+import type { APIResponseData } from "$lib/types/types";
+import PostThumbnail from "./PostThumbnail.svelte";
+export let data:PageData;
+let posts:APIResponseData<"api::blog-post.blog-post">[];
 
-    function handleSearch() {
-    // You can perform your search logic here
-    console.log('Searching for:', searchText);
-    }
+if (data.posts == undefined) {
+    posts = [];
+} else {
+    posts = data.posts;
+}
+
+let searchText = '';
+
+function handleSearch() {
+// You can perform your search logic here
+console.log('Searching for:', searchText);
+}
 
 </script>
 
@@ -19,12 +29,20 @@
     </div>
 </div>
 <div class="posts-box">
-
+    {#each posts as post}
+        <PostThumbnail post={post} />
+    {/each}
 </div>
 
 <style>
     .posts-box {
-        background-color: var(--accent-color-secondary);
+        display: flex;
+        flex-direction: column;
+        background-color: var(--secondary-bg);
+        min-width: 100%;
+        padding: 0.2em;
+        height: 100vh;
+        align-items:center;
     }
     .search-bar {
         display: flex;

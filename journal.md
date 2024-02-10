@@ -72,3 +72,7 @@ Today I worked on the cover image for the blog post as well as tweaked the copy 
 ## 2/6/24
 
 Today I did a bit of styling on the header, and then realized it is kind of pointless to work on it until I finish some more pages. So I started work on the posts page. I created a search bar and then also got the serverside typescript for getting the list of posts. I'll have to add sorting and searching later. I also started using fontawesome for my icons. They look nice and will be quick to  get set up on my page. You just add a script to your page's header and you are off to the races. 
+
+## 2/10/24
+
+Today I did work on the post thumbnail which is what I'm calling what appears in the all posts page. I still need to make it link to the actual post, but so far it shows all the content I'd want it to. I also need to work on querying my posts. I think I'll use query params to do it. Searching by tag will be interesting. we'll see how that goes. Nothing too exciting to say.
