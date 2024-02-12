@@ -41,7 +41,7 @@ console.log('Searching for:', searchText);
         background-color: var(--secondary-bg);
         min-width: 100%;
         padding: 0.2em;
-        height: 100vh;
+        height: fit-content;
         align-items:center;
     }
     .search-bar {

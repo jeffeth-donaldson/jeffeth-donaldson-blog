@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { strapi_url } from '$lib/client/constants';
+	import { formatTZDate } from '$lib/client/functions';
 	import type { richTextBlock } from '$lib/types/richTextBlock';
 	/** @type {import('./$types').PageData} */
 	// @ts-ignore
@@ -12,7 +13,12 @@
 	{#if background_image}
 	<div class="background-image" style="background-image: url({background_image});"></div>
 	{/if}
-	<h1>{data.post?.Title}</h1>
+	<div class="heading">
+		<h1>{data.post?.Title}</h1>
+		<h3>
+			{"Last Updated: "+(formatTZDate(data.post?.updatedAt?.toLocaleString()||""))}
+		</h3>
+	</div>
 	<PostBody content={body}/>
 </div>
 
@@ -30,10 +36,23 @@
 		max-width: 95%;
 		z-index: 0;
 	}
-	.post h1 {
+	.heading h1 {
 		color: var(--accent-color-primary);
-		margin-top: 200px;
 		font-size: 3em;
+		margin-left: 1em;
+	}
+	.heading h3 {
+		margin-right: 1em;
+	}
+	.heading {
+		width: 100%;
+		display: flex;
+		margin-top: 200px;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: baseline;
+		padding-left: 1em;
+		padding-right: 1em;
 	}
 	.background-image {
 		border-radius: 8px;
