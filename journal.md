@@ -76,3 +76,11 @@ Today I did a bit of styling on the header, and then realized it is kind of poin
 ## 2/10/24
 
 Today I did work on the post thumbnail which is what I'm calling what appears in the all posts page. I still need to make it link to the actual post, but so far it shows all the content I'd want it to. I also need to work on querying my posts. I think I'll use query params to do it. Searching by tag will be interesting. we'll see how that goes. Nothing too exciting to say.
+
+## 2/11/24
+
+Today I made it so that you can click on posts thumbnails and it will take you to the article. I also added last updated fields on the thumbnail and the article itself.
+
+## 2/13/24
+
+Today I got to work on the search functionality of my app. I made a lot of progress. I have the serverside code set up to pass a query to strapi depending on query parameters I provide in the page. By default I just check to see if the title, slug, or body match in any way with my search query. it's pretty loose. I still need to handle searching with tags, and pagination. I have the places to plug in to implement both of those, I just need to add the ui parts to it. I'm thinking I just make it so if you click on a tag anywhere it navigates to the search with that tag. A tricky point was that the page wouldn't reload, but thanks to this documentation I was able to get something figured out: [https://kit.svelte.dev/docs/form-actions](https://kit.svelte.dev/docs/form-actions) All you need to do is add this attribute to your form: `data-sveltekit-reload`. 

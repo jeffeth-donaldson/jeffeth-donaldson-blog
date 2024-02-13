@@ -2,6 +2,8 @@
 import type { PageData } from "./$types";
 import type { APIResponseData } from "$lib/types/types";
 import PostThumbnail from "./PostThumbnail.svelte";
+	import { browser } from "$app/environment";
+	import { goto } from "$app/navigation";
 export let data:PageData;
 let posts:APIResponseData<"api::blog-post.blog-post">[];
 
@@ -12,20 +14,33 @@ if (data.posts == undefined) {
 }
 
 let searchText = '';
+let currentSearchTerm="";
+let onSubmit = async () => {
+      let currentSearchTerm = ''
 
-function handleSearch() {
-// You can perform your search logic here
-console.log('Searching for:', searchText);
-}
+      if (browser) {
+        const urlParams = new URLSearchParams(window.location.search)
+        currentSearchTerm = urlParams.get('search') || ""
+      }
 
+      if (searchText.trim() == currentSearchTerm?.trim())
+        return
+
+      await goto(`/posts?search=${encodeURIComponent(searchText.trim())}`, {
+        keepFocus: true,
+      })
+    }
+console.log(posts.length)
 </script>
 
 <h1>Posts</h1>
 <div class="search-bar">
     <h2>Search</h2>
     <div class="input">
-        <input type="text" bind:value={searchText} placeholder="Search..." />
-        <button on:click={handleSearch}><i class="fa-solid fa-magnifying-glass"></i></button>
+        <form action="/posts" data-sveltekit-reload>
+            <input type="search" name="search" bind:value={searchText} placeholder="Search..." />
+            <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
     </div>
 </div>
 <div class="posts-box">
@@ -41,6 +56,7 @@ console.log('Searching for:', searchText);
         background-color: var(--secondary-bg);
         min-width: 100%;
         padding: 0.2em;
+        min-height: 100vh;
         height: fit-content;
         align-items:center;
     }

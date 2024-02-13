@@ -3,8 +3,41 @@ import { strapi_key } from '$lib/server/secrets.js';
 import type { APIResponseCollection } from "$lib/types/types.js";
 
 /** @type {import('./$types').PageLoad} */
-export async function load({ fetch }) {
-	const res = await fetch(`http://localhost:1337/api/blog-posts?populate=*`,
+export async function load({ fetch, url }) {
+    let tags:string[] = [];
+    let tagsQuery = "";
+    let search = "";
+    let pageSize = "10";
+    let page = "1";
+    let sort = "Title:asc";
+    for (const [key, value] of url.searchParams) {
+        switch (key) {
+            case "search":
+                search = value;
+                break;
+            case "pagesize":
+                pageSize = value;
+                break;
+            case "sort":
+                sort = value;
+                break;
+            case "page":
+                page = value;
+                break;
+            case "tags":
+                tags = value.split(',');
+                break;
+            default:
+                break;
+        }
+        if (tags.length > 0 ) {
+            for (let i = 0; i < tags.length; i++) {
+                tagsQuery += `&filters[$and][1][$or][${i}][tags][$containsi]=${tags[i]}`;                
+            }
+        }
+    }
+    const query = `api/blog-posts?sort[0]=${sort}&filters[$and][0][$or][0][slug][$containsi]=${search}&filters[$and][0][$or][1][Title][$containsi]=${search}&filters[$and][0][$or][2][Body][$containsi]=${search}${tagsQuery}&pagination[pageSize]=${pageSize}&pagination[page]=${page}&populate=*`
+	const res = await fetch(`http://localhost:1337/${query}`,
     {
         headers:{'Authorization':`Bearer ${strapi_key}`}
     });

@@ -20,7 +20,7 @@ if (cover_image == undefined) {
 const getPostSummary = (blocks:richTextBlock[], summary="") => {
     blocks.forEach(element => {
         if (summary.length >= 280) {
-            console.log("return")
+            //console.log("return")
             return summary.slice(0,280).trimEnd()
         }
         if (element.type == "text") {
@@ -28,7 +28,7 @@ const getPostSummary = (blocks:richTextBlock[], summary="") => {
             summary += text.text + " "
         } else if (element.children.length > 0) {
             summary = getPostSummary(element.children, summary+" ")
-            console.log(summary.length)
+            //console.log(summary.length)
         }
     });
     return summary.slice(0,280).trimEnd();
