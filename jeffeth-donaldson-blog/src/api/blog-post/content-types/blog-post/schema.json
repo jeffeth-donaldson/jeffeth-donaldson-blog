@@ -48,17 +48,6 @@
         }
       }
     },
-    "tags": {
-      "displayName": "Tags",
-      "type": "component",
-      "repeatable": true,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "component": "metadata.tags"
-    },
     "slug": {
       "pluginOptions": {
         "i18n": {
@@ -67,6 +56,14 @@
       },
       "type": "uid",
       "targetField": "Title"
+    },
+    "tags": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string"
     }
   }
 }

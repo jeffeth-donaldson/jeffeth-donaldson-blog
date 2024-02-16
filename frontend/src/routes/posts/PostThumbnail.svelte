@@ -3,8 +3,15 @@ import type { APIResponseData } from "$lib/types/types";
 import type { imageFormats, imageFormat, image } from "$lib/types/imageTypes";
 import { strapi_url } from "$lib/client/constants"
 import { formatTZDate } from "$lib/client/functions";
-	import type { richTextBlock, textBlock } from "$lib/types/richTextBlock";
+import type { richTextBlock, textBlock } from "$lib/types/richTextBlock";
+import Tag from "./Tag.svelte";
+
 export let post:APIResponseData<"api::blog-post.blog-post">;
+export let tagsOther:string[];
+export let search:string;
+export let pageSize:string;
+export let page:string;
+
 let cover_image = post.attributes.cover?.data?.attributes;
 let cover_image_alt:string; 
 let cover_image_url:string;
@@ -37,7 +44,7 @@ const getPostSummary = (blocks:richTextBlock[], summary="") => {
 const postSummary = getPostSummary(post.attributes.Body as unknown as richTextBlock[])+"...";
 
 // Get tags
-const tags = post.attributes.tags || []
+const tags = post.attributes.tags?.split(',').sort() || []
 
 </script>
 
@@ -57,7 +64,13 @@ const tags = post.attributes.tags || []
             <div class="post-thumbnail-tags">
                 Tags: 
             {#each tags as tag}
-                <div class="post-thumbnail-tag">{tag.tag}</div>
+                <Tag 
+                    tagName={tag || ""}
+                    page={page}
+                    pageSize={pageSize}
+                    search={search}
+                    tagsOther={tagsOther}
+                />
             {/each}
             </div>
             {/if}
@@ -92,6 +105,7 @@ const tags = post.attributes.tags || []
     }
     .post-thumbnail-header h4 {
         margin-right: 1em;
+        color: var(--accent-color-tertiary)
     }
     .post-thumbnail-header {
         display:flex;
@@ -124,11 +138,5 @@ const tags = post.attributes.tags || []
         display:flex;
         flex-direction: row;
         align-items: center;
-    }
-    .post-thumbnail-tag {
-        background-color: var(--accent-color-tertiary);
-        margin-left: 0.5em;
-        padding: 3px;
-        border-radius: 5px;
     }
 </style>

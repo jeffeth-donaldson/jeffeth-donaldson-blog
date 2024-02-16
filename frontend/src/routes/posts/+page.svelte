@@ -2,8 +2,7 @@
 import type { PageData } from "./$types";
 import type { APIResponseData } from "$lib/types/types";
 import PostThumbnail from "./PostThumbnail.svelte";
-	import { browser } from "$app/environment";
-	import { goto } from "$app/navigation";
+	import { generateQueryString } from "$lib/client/functions";
 export let data:PageData;
 let posts:APIResponseData<"api::blog-post.blog-post">[];
 
@@ -13,31 +12,45 @@ if (data.posts == undefined) {
     posts = data.posts;
 }
 
+let tags = data.tags || [];
+tags = [...new Set(tags)];
+let search = data.search||"";
+let pageSize = data.pageSize||"";
+let page = data.page||"1";
+
+const queryPopTag = (tag:string) => {
+    const updatedTags = tags.filter(item => item !== tag);
+    return generateQueryString(pageSize, updatedTags, search, page)
+}
+
+const queryPopSearch = () => {
+    return generateQueryString(pageSize, tags, "", page)
+}
+
 let searchText = '';
-let currentSearchTerm="";
-let onSubmit = async () => {
-      let currentSearchTerm = ''
 
-      if (browser) {
-        const urlParams = new URLSearchParams(window.location.search)
-        currentSearchTerm = urlParams.get('search') || ""
-      }
-
-      if (searchText.trim() == currentSearchTerm?.trim())
-        return
-
-      await goto(`/posts?search=${encodeURIComponent(searchText.trim())}`, {
-        keepFocus: true,
-      })
-    }
-console.log(posts.length)
 </script>
 
 <h1>Posts</h1>
 <div class="search-bar">
     <h2>Search</h2>
+    <div class="search-items">
+    {#each tags as tag}
+        <div class="search-item">
+            <a data-sveltekit-reload href={"/posts"+queryPopTag(tag)}><i class="fa-solid fa-x"></i></a>
+            <div>tag:{tag}</div>
+        </div>
+    {/each}
+    {#if search}
+        <div class="search-item">
+            <a data-sveltekit-reload href={"/posts"+queryPopSearch()}><i class="fa-solid fa-x"></i></a>
+            <div>"{search}"</div>
+        </div>
+    {/if}
+    </div>
     <div class="input">
         <form action="/posts" data-sveltekit-reload>
+            <input type="text" class="invisible" name="tags" value={tags.join(',')}/>
             <input type="search" name="search" bind:value={searchText} placeholder="Search..." />
             <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
@@ -45,7 +58,13 @@ console.log(posts.length)
 </div>
 <div class="posts-box">
     {#each posts as post}
-        <PostThumbnail post={post} />
+        <PostThumbnail 
+            post={post}
+            tagsOther={tags}
+            page={page}
+            pageSize={pageSize}
+            search={search}
+        />
     {/each}
 </div>
 
@@ -66,7 +85,6 @@ console.log(posts.length)
         align-items: center;
         min-width: 80%;
     }
-
     .input {
         display: flex;
         align-items: center;
@@ -75,7 +93,6 @@ console.log(posts.length)
         border: none;
         border-radius: 5px; /* Rounded corners */
     }
-
     .input input {
         background-color: var(--tertiary-bg);
         height:fit-content;
@@ -86,16 +103,41 @@ console.log(posts.length)
         font-size:large;
         padding: 0.2em;
     }
-
     .input button {
-    padding: 5px;
-    background-color: var(--accent-color-secondary);
-    border: none;
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer;
-  }
-
-  .input button:hover {
-    background-color: var(--accent-color-yes);
-  }
+        padding: 5px;
+        background-color: var(--accent-color-secondary);
+        border: none;
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer;
+    }
+    .input button:hover {
+        background-color: var(--accent-color-yes);
+    }
+    .search-item {
+        display:flex;
+        flex-direction:row;
+        align-items:center;
+        text-decoration: none;
+        color: var(--text-color);
+        background-color: var(--tertiary-bg);
+        border-radius: 5px;
+        padding:0.3em;
+    }
+    .search-items {
+        display:flex;
+        flex-direction: row;
+    }
+    .search-item {
+        margin-right: 0.5em;
+    }
+    .search-item div{
+        margin-left: 0.5em;
+    }
+    .search-item a {
+        text-decoration: none;
+        color: var(--text-color);
+    }
+    .invisible {
+        display: none;
+    }
 </style>

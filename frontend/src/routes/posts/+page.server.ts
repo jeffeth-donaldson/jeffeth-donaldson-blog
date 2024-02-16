@@ -31,9 +31,12 @@ export async function load({ fetch, url }) {
                 break;
         }
         if (tags.length > 0 ) {
+            console.log(tags)
+            tagsQuery=""
             for (let i = 0; i < tags.length; i++) {
-                tagsQuery += `&filters[$and][1][$or][${i}][tags][$containsi]=${tags[i]}`;                
+                tagsQuery += `&filters[$and][1][$or][${i}][tags][$containsi]=${tags[i]}`; 
             }
+            console.log(tagsQuery)
         }
     }
     const query = `api/blog-posts?sort[0]=${sort}&filters[$and][0][$or][0][slug][$containsi]=${search}&filters[$and][0][$or][1][Title][$containsi]=${search}&filters[$and][0][$or][2][Body][$containsi]=${search}${tagsQuery}&pagination[pageSize]=${pageSize}&pagination[page]=${page}&populate=*`
@@ -43,7 +46,13 @@ export async function load({ fetch, url }) {
     });
     if (res.status < 300) {
         const item = await res.json() as APIResponseCollection<"api::blog-post.blog-post">;
-        return { posts:item.data };
+        return { 
+            posts:item.data,
+            search:search,
+            tags:tags,
+            pageSize:pageSize,
+            page:page
+        };
     } else {
         error(404, 'Post Not found')
     }

@@ -15,6 +15,9 @@
 	{/if}
 	<div class="heading">
 		<h1>{data.post?.Title}</h1>
+		<div class="tags">
+			
+		</div>
 		<h3>
 			{"Last Updated: "+(formatTZDate(data.post?.updatedAt?.toLocaleString()||""))}
 		</h3>
