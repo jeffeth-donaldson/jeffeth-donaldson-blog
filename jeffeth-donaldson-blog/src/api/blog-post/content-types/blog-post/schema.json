@@ -63,7 +63,8 @@
           "localized": true
         }
       },
-      "type": "string"
+      "type": "string",
+      "regex": "^([A-Z0-9]{1}[a-zA-Z0-9]*)(,[A-Z0-9]{1}[a-zA-Z0-9]*)*$"
     }
   }
 }

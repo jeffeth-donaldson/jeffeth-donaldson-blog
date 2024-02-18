@@ -3,6 +3,7 @@ import type { PageData } from "./$types";
 import type { APIResponseData } from "$lib/types/types";
 import PostThumbnail from "./PostThumbnail.svelte";
 	import { generateQueryString } from "$lib/client/functions";
+	import Paginator from "./Paginator.svelte";
 export let data:PageData;
 let posts:APIResponseData<"api::blog-post.blog-post">[];
 
@@ -16,6 +17,7 @@ let tags = data.tags || [];
 tags = [...new Set(tags)];
 let search = data.search||"";
 let pageSize = data.pageSize||"";
+let pageCount = data.pageCount||"1";
 let page = data.page||"1";
 
 const queryPopTag = (tag:string) => {
@@ -36,10 +38,12 @@ let searchText = '';
     <h2>Search</h2>
     <div class="search-items">
     {#each tags as tag}
+        {#if tag}
         <div class="search-item">
             <a data-sveltekit-reload href={"/posts"+queryPopTag(tag)}><i class="fa-solid fa-x"></i></a>
             <div>tag:{tag}</div>
         </div>
+        {/if}
     {/each}
     {#if search}
         <div class="search-item">
@@ -48,6 +52,9 @@ let searchText = '';
         </div>
     {/if}
     </div>
+    {#if search || (tags.length>0)}
+        <p>{data.postCount} results</p>
+    {/if}
     <div class="input">
         <form action="/posts" data-sveltekit-reload>
             <input type="text" class="invisible" name="tags" value={tags.join(',')}/>
@@ -66,6 +73,7 @@ let searchText = '';
             search={search}
         />
     {/each}
+    <Paginator tags={tags} search={search} pageSize={pageSize} pageCount={pageCount} page={page} />
 </div>
 
 <style>

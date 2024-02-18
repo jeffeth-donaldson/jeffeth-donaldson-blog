@@ -2,12 +2,14 @@
 	import { strapi_url } from '$lib/client/constants';
 	import { formatTZDate } from '$lib/client/functions';
 	import type { richTextBlock } from '$lib/types/richTextBlock';
+	import Tag from '../Tag.svelte';
 	/** @type {import('./$types').PageData} */
 	// @ts-ignore
 	import PostBody from './PostBody.svelte';
 	export let data;
 	const body = data.post?.Body as unknown as richTextBlock[];
 	const background_image = strapi_url + data.post?.cover?.data?.attributes.url;
+	const tags = data.post?.tags?.split(',') || []
 </script>
 <div class="post">
 	{#if background_image}
@@ -16,7 +18,10 @@
 	<div class="heading">
 		<h1>{data.post?.Title}</h1>
 		<div class="tags">
-			
+			Tags:
+			{#each tags as tag}
+				<Tag tagName={tag}/>
+			{/each}
 		</div>
 		<h3>
 			{"Last Updated: "+(formatTZDate(data.post?.updatedAt?.toLocaleString()||""))}
@@ -69,5 +74,10 @@
 		background-repeat: no-repeat;
 		z-index: -1; /* Ensure the background image sits behind other content */
 		mask-image: linear-gradient(to bottom, rgba(255,255,255,1), rgba(255,255,255,0));
+	}
+	.tags {
+		display:flex;
+		flex-direction: row;
+		align-items: baseline;
 	}
 </style>
