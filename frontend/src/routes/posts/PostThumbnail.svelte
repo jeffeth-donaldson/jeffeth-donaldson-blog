@@ -7,10 +7,10 @@ import type { richTextBlock, textBlock } from "$lib/types/richTextBlock";
 import Tag from "./Tag.svelte";
 
 export let post:APIResponseData<"api::blog-post.blog-post">;
-export let tagsOther:string[];
-export let search:string;
-export let pageSize:string;
-export let page:string;
+export let tagsOther:string[]=[];
+export let search:string="";
+export let pageSize:string="";
+export let page:string="";
 
 let cover_image = post.attributes.cover?.data?.attributes;
 let cover_image_alt:string; 

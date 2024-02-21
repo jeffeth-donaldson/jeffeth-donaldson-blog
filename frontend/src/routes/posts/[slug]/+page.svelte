@@ -16,7 +16,7 @@
 	<div class="background-image" style="background-image: url({background_image});"></div>
 	{/if}
 	<div class="heading">
-		<h1>{data.post?.Title}</h1>
+		<h1 class="sixtyfour">{data.post?.Title}</h1>
 		<div class="tags">
 			Tags:
 			{#each tags as tag}
