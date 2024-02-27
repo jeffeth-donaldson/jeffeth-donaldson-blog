@@ -22,7 +22,15 @@
 		</div>
 		<div class="body-description">
 			<h2>Hey There!</h2>
-			<p>Hello and Welcome to my Blog. Here is where I'll show off any projects I've been working on (including this site). As well as share anything I find somewhat useful/insightful.</p>
+			<p>
+				Hello and Welcome to my Blog. Here is where I'll show off any projects I've been working on 
+				(including this site). As well as share anything I find somewhat useful/insightful. This will 
+				tend to focus on things relating to python, web development, game development, shell scripting,
+				and linux, but don't be surprised to see anything here! Try searching for something in the <code>posts</code>
+				page, or click on a tag anywhere on the site to search for articles relating to that tag! 
+				In the <code>projects</code> page you will be able to see projects I've worked on,
+				as well as find all the articles associated with that article.
+			</p>
 		</div>
 		<div class="body-links sixtyfour">
 			<a href="/posts">Posts</a>

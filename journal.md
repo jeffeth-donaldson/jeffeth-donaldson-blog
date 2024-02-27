@@ -92,3 +92,11 @@ Today I worked on upgrading the search. I first made it so that the search page 
 ## 2/17/24
 
 Today I made it so tags show up inside the post page, and I also added the paginator to the search page. It's all really slick and how I like it. One thing that I wasn't sure about was how to design the paginator. I don't know if there is a best practice or not. And having looked online I couldn't really find any sort of definitive answer. So what I did is that if you are past the first page, on the left you'll have a link to the previous page, a link that is a left arrow that takes you to the previous page, and a double left arrow that takes you to the first page. If you aren't on the last page we have the same thing mirrored on the other side. It also displays what page you are on now in a different color (this isn't a link). It is a bit redundant like I said but also it seemed to be the most natural to me so it's what I went with. 
+
+## 2/20/24
+
+Today I went hog-wild on my home page. I have some really cool CSS effects I'm really proud of. My title block has an animated background and a really cool font, and I have a links row with animated colors and a cool expanding hover animation. I'm also adding in some quick links to recent posts and a section for recent projects once I've implemented those. I'm thinking I need to work on sprucing up my header as well. Oh and I need to work on a footer too.
+
+## 2/27/24
+
+It's been a while since I've last added stuff to the project because I got strep last week. I still have it but I'm feeling much better. Anyways I added in a footer and I spiced up the header a bit. I added a website label to the header, and added some animation to the background. Now that cool breathing effect will be on all of my pages so it is a bit more thematically consistent. I added a link to my github and a "made with 😎" message at the bottom. Next time I'll add the "about me" page 

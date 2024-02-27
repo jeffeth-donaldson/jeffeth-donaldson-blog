@@ -1,5 +1,6 @@
 <script>
 	import "../app.pcss";
+	import Footer from "./Footer.svelte";
     import Header from './Header.svelte';
     import './styles.css';
 </script>
@@ -11,8 +12,7 @@
 		<slot></slot>
 	</main>
 
-	<footer>
-	</footer>
+	<Footer/>
 </div>
 
 <style>
