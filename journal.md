@@ -100,3 +100,7 @@ Today I went hog-wild on my home page. I have some really cool CSS effects I'm r
 ## 2/27/24
 
 It's been a while since I've last added stuff to the project because I got strep last week. I still have it but I'm feeling much better. Anyways I added in a footer and I spiced up the header a bit. I added a website label to the header, and added some animation to the background. Now that cool breathing effect will be on all of my pages so it is a bit more thematically consistent. I added a link to my github and a "made with 😎" message at the bottom. Next time I'll add the "about me" page 
+
+## 3/9/24
+
+Today I worked on the about me page. I had a hard time getting it to space correctly, but I think I've got something working now. I don't really like how I did it. I had to do a spacer and make it's height some amount of vh. I don't know how it will look once I get real info in there. The page is essentially static so that shouldn't be too much of a problem. I also noticed that my header doesn't work that great when we are on mobile screen sizes. I think I need to make the site logo dissappear if the screen isn't wide enough. I'm not sure how I'd do that. Aside from that I need to work on the projects backend next time.
