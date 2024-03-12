@@ -6,13 +6,13 @@ import { formatTZDate } from "$lib/client/functions";
 import type { richTextBlock, textBlock } from "$lib/types/richTextBlock";
 import Tag from "$lib/commonComponents/Tag.svelte";
 
-export let post:APIResponseData<"api::blog-post.blog-post">;
+export let project:APIResponseData<"api::project.project">;
 export let tagsOther:string[]=[];
 export let search:string="";
 export let pageSize:string="";
 export let page:string="";
 
-let cover_image = post.attributes.cover?.data?.attributes;
+let cover_image = project.attributes.icon?.data?.attributes;
 let cover_image_alt:string; 
 let cover_image_url:string;
 
@@ -40,28 +40,28 @@ const getPostSummary = (blocks:richTextBlock[], summary="") => {
     });
     return summary.slice(0,280).trimEnd();
 }
-// Get Post summary (first n characters in the post's content)
-const postSummary = getPostSummary(post.attributes.Body as unknown as richTextBlock[])+"...";
+// Get project summary (first n characters in the project's content)
+const postSummary = project.attributes.description;
 
 // Get tags
-const tags = post.attributes.tags?.split(',').sort() || []
+const tags = project.attributes.tags?.split(',').sort() || []
 
 </script>
 
-<a href={"./posts/"+post.attributes.slug}>
-<div class="post-thumbnail">
-    <div class="post-thumbnail-header">
-        <h1>{post.attributes.Title}</h1>
-        <h4>{formatTZDate(post.attributes.updatedAt?.toLocaleString()||"")}</h4>
+<a href={"./posts/"+project.attributes.slug}>
+<div class="project-thumbnail">
+    <div class="project-thumbnail-header">
+        <h1>{project.attributes.name}</h1>
+        <h4>{formatTZDate(project.attributes.updatedAt?.toLocaleString()||"")}</h4>
     </div>
-    <div class="post-thumbnail-content">
-        <div class="post-thumbnail-image">
+    <div class="project-thumbnail-content">
+        <div class="project-thumbnail-image">
             <img src={strapi_url + cover_image_url} alt={cover_image_alt} />
         </div>
-        <div class="post-thumbnail-text">
+        <div class="project-thumbnail-text">
             <p>{postSummary}</p>
             {#if tags.length > 0}
-            <div class="post-thumbnail-tags">
+            <div class="project-thumbnail-tags">
                 Tags: 
             {#each tags as tag}
                 <Tag 
@@ -80,7 +80,7 @@ const tags = post.attributes.tags?.split(',').sort() || []
 </a>
 
 <style>
-    .post-thumbnail {
+    .project-thumbnail {
         background-color: var(--tertiary-bg);
         border-radius: 10px;
         transition: box-shadow 0.3s, background-color 0.3s;
@@ -88,7 +88,7 @@ const tags = post.attributes.tags?.split(',').sort() || []
         width: 100%;
     }  
     
-    .post-thumbnail:hover {
+    .project-thumbnail:hover {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     }
     
@@ -99,42 +99,42 @@ const tags = post.attributes.tags?.split(',').sort() || []
         width: 95%;
     }
 
-    .post-thumbnail-header h1 {
+    .project-thumbnail-header h1 {
         margin-left: 1em;
         color: var(--accent-color-primary)
     }
-    .post-thumbnail-header h4 {
+    .project-thumbnail-header h4 {
         margin-right: 1em;
         color: var(--accent-color-tertiary)
     }
-    .post-thumbnail-header {
+    .project-thumbnail-header {
         display:flex;
         justify-content: space-between;
         justify-items: center;
     }
 
-    .post-thumbnail-image {
+    .project-thumbnail-image {
         width:234px;
         height:156px;
     }
 
-    .post-thumbnail-content {
+    .project-thumbnail-content {
         display: flex;
         flex-direction: row;
         padding: 1em;
     }
 
-    .post-thumbnail-text {
+    .project-thumbnail-text {
         margin-left: 1em;
     }
 
-    .post-thumbnail-content p {
+    .project-thumbnail-content p {
         font-size: large;
         font-style:italic;
         color: var(--text-color-muted);
     }
 
-    .post-thumbnail-tags {
+    .project-thumbnail-tags {
         display:flex;
         flex-direction: row;
         align-items: center;

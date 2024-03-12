@@ -876,6 +876,11 @@ export interface ApiBlogPostBlogPost extends Schema.CollectionType {
           localized: true;
         };
       }>;
+    project: Attribute.Relation<
+      'api::blog-post.blog-post',
+      'manyToOne',
+      'api::project.project'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -900,6 +905,46 @@ export interface ApiBlogPostBlogPost extends Schema.CollectionType {
   };
 }
 
+export interface ApiProjectProject extends Schema.CollectionType {
+  collectionName: 'projects';
+  info: {
+    singularName: 'project';
+    pluralName: 'projects';
+    displayName: 'Project';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    description: Attribute.Text;
+    slug: Attribute.UID<'api::project.project', 'name'>;
+    icon: Attribute.Media;
+    tags: Attribute.String;
+    repository_url: Attribute.String;
+    blog_posts: Attribute.Relation<
+      'api::project.project',
+      'oneToMany',
+      'api::blog-post.blog-post'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::project.project',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::project.project',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -920,6 +965,7 @@ declare module '@strapi/types' {
       'plugin::i18n.locale': PluginI18NLocale;
       'api::about.about': ApiAboutAbout;
       'api::blog-post.blog-post': ApiBlogPostBlogPost;
+      'api::project.project': ApiProjectProject;
     }
   }
 }

@@ -65,6 +65,12 @@
       },
       "type": "string",
       "regex": "^([A-Z0-9]{1}[a-zA-Z0-9]*)(,[A-Z0-9]{1}[a-zA-Z0-9]*)*$"
+    },
+    "project": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::project.project",
+      "inversedBy": "blog_posts"
     }
   }
 }
