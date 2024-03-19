@@ -108,3 +108,7 @@ Today I worked on the about me page. I had a hard time getting it to space corre
 ## 3/11/24
 
 Today I added some the backend schema for projects and started on the frontend. Since it is very similar to posts I'm reusing a lot of stuff.
+
+## 3/19/24
+
+Today I fixed a few bugs with the project search page. I also made the decision to have all tags link to the posts page. I feel like that will make more sense since I won't be having too many projects. I started on the project view page as well today. It is basically going to be a card with some information on it as well as some links to articles about the project. I'm reusing the post page so I got a lot for free. It still needs more work though. The articles don't show up yet.

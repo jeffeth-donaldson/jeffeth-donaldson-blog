@@ -2,7 +2,7 @@
 	import { strapi_url } from '$lib/client/constants';
 	import { formatTZDate } from '$lib/client/functions';
 	import type { richTextBlock } from '$lib/types/richTextBlock';
-	import Tag from '../Tag.svelte';
+	import Tag from '$lib/commonComponents/Tag.svelte';
 	/** @type {import('./$types').PageData} */
 	// @ts-ignore
 	import PostBody from './PostBody.svelte';

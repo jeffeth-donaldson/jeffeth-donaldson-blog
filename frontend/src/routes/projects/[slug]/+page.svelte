@@ -1,36 +1,65 @@
 <script lang="ts">
 	import { strapi_url } from '$lib/client/constants';
 	import { formatTZDate } from '$lib/client/functions';
-	import type { richTextBlock } from '$lib/types/richTextBlock';
 	import Tag from '$lib/commonComponents/Tag.svelte';
-	/** @type {import('./$types').PageData} */
-	// @ts-ignore
-	import PostBody from './PostBody.svelte';
-	export let data;
+	import type { PageData } from './$types';
+	import type { imageFormats } from '$lib/types/imageTypes';
+	export let data: PageData;
 	const description = data.project?.description;
-	const background_image = strapi_url + data.project?.icon?.data?.attributes.url;
+	const image_formats = data.project?.icon?.data?.attributes.formats as unknown as imageFormats;
+	const image = image_formats.small;
+	const image_url = strapi_url + image.url;
+	// const image_url = false;
+	const image_alt = data.project?.icon?.data?.attributes.alternativeText;
+	
 	const tags = data.project?.tags?.split(',') || []
+	const name = data.project?.name || "";
 </script>
-<div class="project">
-	{#if background_image}
-	<div class="background-image" style="background-image: url({background_image});"></div>
-	{/if}
-	<div class="heading">
-		<h1 class="sixtyfour">{data.project?.name}</h1>
+<div class="container">
+	<div class="project">
+		<div class="heading">
+			<h1 class="sixtyfour">{name}</h1>
+			<h3>
+				{"Last Updated: "+(formatTZDate(data.project?.updatedAt?.toLocaleString()||""))}
+			</h3>
+		</div>
+		<div class="content">
+			{#if image_url}
+			<img src={image_url} alt={image_alt}/>
+			{:else}
+			<div class="image-placeholder"></div>
+			{/if}
+			<p>{description}</p> 
+		</div>
 		<div class="tags">
 			Tags:
 			{#each tags as tag}
-				<Tag tagName={tag}/>
+			<Tag tagName={tag}/>
 			{/each}
 		</div>
-		<h3>
-			{"Last Updated: "+(formatTZDate(data.project?.updatedAt?.toLocaleString()||""))}
-		</h3>
 	</div>
-	<p>content={description}</p> 
 </div>
 
 <style lang="postcss">
+	img {
+		margin:1em;
+	}
+	.content {
+		display: flex;
+		flex-direction: row;
+	}
+	.image-placeholder {
+		width: 400px;
+		height: 400px;
+		background-color: var(--tertiary-bg);
+		margin: 1em;
+	}
+	.container {
+		min-height: 85vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 	.project {
 		position:relative;
 		display: flex;
@@ -55,29 +84,18 @@
 	.heading {
 		width: 100%;
 		display: flex;
-		margin-top: 200px;
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: baseline;
 		padding-left: 1em;
 		padding-right: 1em;
 	}
-	.background-image {
-		border-radius: 8px;
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 250px;
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
-		z-index: -1; /* Ensure the background image sits behind other content */
-		mask-image: linear-gradient(to bottom, rgba(255,255,255,1), rgba(255,255,255,0));
-	}
 	.tags {
 		display:flex;
 		flex-direction: row;
 		align-items: baseline;
+		margin: 1em;
+		margin-left: 5em;
+		width: 100%;
 	}
 </style>
