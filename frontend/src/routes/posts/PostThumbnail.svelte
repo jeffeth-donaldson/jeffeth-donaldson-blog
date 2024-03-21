@@ -48,7 +48,7 @@ const tags = post.attributes.tags?.split(',').sort() || []
 
 </script>
 
-<a href={"./posts/"+post.attributes.slug}>
+<a href={"/posts/"+post.attributes.slug}>
 <div class="post-thumbnail">
     <div class="post-thumbnail-header">
         <h1>{post.attributes.Title}</h1>

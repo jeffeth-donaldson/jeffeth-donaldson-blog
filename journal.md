@@ -103,7 +103,7 @@ It's been a while since I've last added stuff to the project because I got strep
 
 ## 3/9/24
 
-Today I worked on the about me page. I had a hard time getting it to space correctly, but I think I've got something working now. I don't really like how I did it. I had to do a spacer and make it's height some amount of vh. I don't know how it will look once I get real info in there. The page is essentially static so that shouldn't be too much of a problem. I also noticed that my header doesn't work that great when we are on mobile screen sizes. I think I need to make the site logo dissappear if the screen isn't wide enough. I'm not sure how I'd do that. Aside from that I need to work on the projects backend next time.
+Today I worked on the about me page. I had a hard time getting it to space correctly, but I think I've got something working now. I don't really like how I did it. I had to do a spacer and make it's height some amount of vh. I don't know how it will look once I get real info in there. The page is essentially static so that shouldn't be too much of a problem. I also noticed that my header doesn't work that great when we are on mobile screen sizes. I think I need to make the site logo disappear if the screen isn't wide enough. I'm not sure how I'd do that. Aside from that I need to work on the projects backend next time.
 
 ## 3/11/24
 
@@ -112,3 +112,7 @@ Today I added some the backend schema for projects and started on the frontend. 
 ## 3/19/24
 
 Today I fixed a few bugs with the project search page. I also made the decision to have all tags link to the posts page. I feel like that will make more sense since I won't be having too many projects. I started on the project view page as well today. It is basically going to be a card with some information on it as well as some links to articles about the project. I'm reusing the post page so I got a lot for free. It still needs more work though. The articles don't show up yet.
+
+## 3/21/24
+
+Today I added the related articles view to the project page. I had lots of issues dealing with the overflow and sizing. I've also realized that I am not equipped for this to work on mobile. I think I need to get that working first since I bet lots of people will try to visit the site on their phones. An easier thing to do would be to be able to link back from an article to the project it is a part of.

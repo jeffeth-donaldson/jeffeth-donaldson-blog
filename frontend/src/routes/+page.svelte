@@ -29,7 +29,7 @@
 				and linux, but don't be surprised to see anything here! Try searching for something in the <code>posts</code>
 				page, or click on a tag anywhere on the site to search for articles relating to that tag! 
 				In the <code>projects</code> page you will be able to see projects I've worked on,
-				as well as find all the articles associated with that article.
+				as well as find all the articles associated with that project.
 			</p>
 		</div>
 		<div class="body-links sixtyfour">

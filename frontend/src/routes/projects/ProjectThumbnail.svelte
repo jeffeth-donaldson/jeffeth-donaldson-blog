@@ -48,7 +48,7 @@ const tags = project.attributes.tags?.split(',').sort() || []
 
 </script>
 
-<a href={"./projects/"+project.attributes.slug}>
+<a href={"/projects/"+project.attributes.slug}>
 <div class="project-thumbnail">
     <div class="project-thumbnail-header">
         <h1>{project.attributes.name}</h1>
