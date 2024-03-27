@@ -1,4 +1,3 @@
-import { error } from '@sveltejs/kit';
 import { strapi_key } from '$lib/server/secrets.js';
 import type { APIResponseCollection } from "$lib/types/types.js";
 
@@ -8,18 +7,27 @@ export async function load({ fetch }) {
     const page = "1";
     const sort = "updatedAt:desc";
 
-    const query = `api/blog-posts?sort[0]=${sort}&pagination[pageSize]=${pageSize}&pagination[page]=${page}&populate=*`
-	const res = await fetch(`http://localhost:1337/${query}`,
+    const postQuery = `api/blog-posts?sort[0]=${sort}&pagination[pageSize]=${pageSize}&pagination[page]=${page}&populate=*`
+	const postRes = await fetch(`http://localhost:1337/${postQuery}`,
     {
         headers:{'Authorization':`Bearer ${strapi_key}`}
     });
-    if (res.status < 300) {
-        const item = await res.json() as APIResponseCollection<"api::blog-post.blog-post">;
-        return { 
-            posts:item.data,
-
-        };
-    } else {
-        error(404, 'Post Not found')
+    let posts:APIResponseCollection<"api::blog-post.blog-post"> | undefined = undefined;
+    if (postRes.status < 300) {
+        posts = await postRes.json() as APIResponseCollection<"api::blog-post.blog-post">;
     }
-}
+
+    const projectQuery = `api/projects?sort[0]=${sort}&pagination[pageSize]=${pageSize}&pagination[page]=${page}&populate=*`
+	const projectRes = await fetch(`http://localhost:1337/${projectQuery}`,
+    {
+        headers:{'Authorization':`Bearer ${strapi_key}`}
+    });
+    let projects:APIResponseCollection<"api::project.project"> | undefined = undefined;
+    if (projectRes.status < 300) {
+        projects = await projectRes.json() as APIResponseCollection<"api::project.project">;
+    }
+    return { 
+        posts:posts?.data,
+        projects:projects?.data
+    };
+};

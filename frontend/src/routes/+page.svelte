@@ -2,13 +2,19 @@
 	import type { APIResponseData } from "$lib/types/types";
 	import type { PageData } from "./$types";
 	import PostThumbnail from "./posts/PostThumbnail.svelte";
+	import ProjectThumbnail from "./projects/ProjectThumbnail.svelte";
 	export let data:PageData;
 	let posts:APIResponseData<"api::blog-post.blog-post">[];
-
+	let projects:APIResponseData<"api::project.project">[];
 	if (data.posts == undefined) {
 		posts = [];
 	} else {
 		posts = data.posts;
+	}
+	if (data.projects == undefined) {
+		projects= [];
+	} else {
+		projects = data.projects;
 	}
 </script>
 
@@ -49,7 +55,12 @@
 				{/each}
 				</div>
 				<div class="projects">
-
+					<h2>Recent Projects</h2>
+					{#each projects as project}
+						<ProjectThumbnail
+							project={project}
+						/>
+					{/each}
 				</div>
 			</div>
 		</div>
@@ -164,6 +175,17 @@
 	}
 	
 	.posts {
+		border-radius:10px;
+		display:flex;
+		flex-direction: column;
+		justify-items: center;
+		text-align: center;
+		width:50%;
+		background-color: var(--secondary-bg);
+		padding: 1em;
+	}
+
+	.projects {
 		border-radius:10px;
 		display:flex;
 		flex-direction: column;
