@@ -44,7 +44,7 @@
 			<a href="/about">About</a>
 		</div>
 		<div>
-			<h2>Check this out:</h2>
+			<h2 class="check-this-out">Check this out:</h2>
 			<div class="body-check-this-out">
 				<div class="posts">
 					<h2>Recent Posts</h2>
@@ -70,6 +70,7 @@
 <style>
 	.page-body {
 		min-width: 65%;
+		max-width: 100%;
 		min-height: 100vh;
 		background-color: var(--tertiary-bg);
 		border-radius: 20px;
@@ -172,6 +173,7 @@
 		min-width: 90%;
 		display:flex;
 		flex-direction:row;
+		justify-content: space-evenly;
 	}
 	
 	.posts {
@@ -179,8 +181,9 @@
 		display:flex;
 		flex-direction: column;
 		justify-items: center;
+		align-items: center;
 		text-align: center;
-		width:50%;
+		width:46%;
 		background-color: var(--secondary-bg);
 		padding: 1em;
 	}
@@ -190,9 +193,45 @@
 		display:flex;
 		flex-direction: column;
 		justify-items: center;
+		align-items: center;
 		text-align: center;
-		width:50%;
+		width:46%;
 		background-color: var(--secondary-bg);
 		padding: 1em;
+	}
+	@media screen and (max-width: 800px) {
+		.page-body {
+			width:87vw;
+			padding:1em;
+		}
+		.sixtyfour {
+			font-size: 9vw;
+		}
+		.body-links {
+			flex-direction: column;
+		}
+		.body-links a {
+			width:auto;
+		}
+
+		.body-links a:hover {
+			width:auto;
+		}
+		.check-this-out {
+			text-align:center;
+		}
+		.body-check-this-out {
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			width:100%;
+		}
+		.posts {
+			width:95%;
+		}
+		.projects {
+			width:95%;
+		}
 	}
 </style>

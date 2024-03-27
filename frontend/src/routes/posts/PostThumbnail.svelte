@@ -97,6 +97,7 @@ const tags = post.attributes.tags?.split(',').sort() || []
         text-decoration: none;
         color: inherit;
         width: 95%;
+        display:flex;
     }
 
     .post-thumbnail-header h1 {
@@ -138,5 +139,28 @@ const tags = post.attributes.tags?.split(',').sort() || []
         display:flex;
         flex-direction: row;
         align-items: center;
+        flex-wrap: wrap;
+    }
+    @media screen and (max-width: 800px) {
+        .post-thumbnail-content {
+            flex-direction: column;
+            align-items: center;
+        }
+        .post-thumbnail-header {
+            flex-direction: column;
+            align-items: center;
+        }
+        .post-thumbnail-header h1 {
+            margin:0px;
+        }
+        .post-thumbnail-header h4 {
+            margin:0px;
+        }
+        a {
+            max-width:95vw;
+            margin-left:1em;
+            margin-right:1em;
+        }
+
     }
 </style>

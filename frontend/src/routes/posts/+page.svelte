@@ -73,7 +73,7 @@ let searchText = '';
             search={search}
         />
     {/each}
-    <Paginator tags={tags} search={search} pageSize={pageSize} pageCount={pageCount} page={page} />
+    <Paginator tags={tags} search={search} pageSize={pageSize} pageCount={pageCount+""} page={page} />
 </div>
 
 <style>
@@ -147,5 +147,12 @@ let searchText = '';
     }
     .invisible {
         display: none;
+    }
+    @media screen and (max-width: 800px) {
+        .posts-box {
+            width:100vw;
+            padding:0px;
+            justify-items: center;
+        }
     }
 </style>

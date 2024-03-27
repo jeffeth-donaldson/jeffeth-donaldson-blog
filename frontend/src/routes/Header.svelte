@@ -71,4 +71,14 @@
 	.padding {
 		width:33%;
 	}
+	/* mobile/tablet site */
+	@media screen and (max-width: 800px) {
+		.padding {
+			visibility: hidden;
+			width:0px;
+		}
+		nav {
+			width:100%;
+		}
+	}
 </style>
