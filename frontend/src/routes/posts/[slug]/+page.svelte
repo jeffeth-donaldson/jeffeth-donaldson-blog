@@ -9,7 +9,9 @@
 	export let data;
 	const body = data.post?.Body as unknown as richTextBlock[];
 	const background_image = strapi_url + data.post?.cover?.data?.attributes.url;
-	const tags = data.post?.tags?.split(',') || []
+	const tags = data.post?.tags?.split(',') || [];
+	const project = data.post?.project?.data.attributes.slug || "";
+	const project_name = data.post?.project?.data.attributes.name || "";
 </script>
 <div class="post">
 	{#if background_image}
@@ -17,6 +19,9 @@
 	{/if}
 	<div class="heading">
 		<h1 class="sixtyfour">{data.post?.Title}</h1>
+		{#if project}
+		<div>Part of the <a href={"/projects/"+project}>{project_name}</a> project</div>
+		{/if}
 		<div class="tags">
 			Tags:
 			{#each tags as tag}

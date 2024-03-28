@@ -35,7 +35,7 @@ let searchText = '';
 
 <h1>Projects</h1>
 <div class="search-bar">
-    <h2>Search</h2>
+    <h2 class="search-label">Search</h2>
     <div class="search-items">
     {#each tags as tag}
         {#if tag}
@@ -147,5 +147,35 @@ let searchText = '';
     }
     .invisible {
         display: none;
+    }
+
+    /* Mobile site */
+    @media screen and (max-width: 800px) {
+        .search-bar {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            align-items: center;
+            justify-items: center;
+            min-width: 80%;
+            flex-wrap: wrap-reverse;
+            margin-bottom: 1em;
+        }
+
+        .search-label {
+            display: none;
+        }
+        .input {
+            width:100%;
+            align-content: space-between;
+        }
+        form {
+            width:100%;
+            display: flex;
+            justify-content: space-between;
+        }
+        form input {
+            width:100%;
+        }
     }
 </style>
