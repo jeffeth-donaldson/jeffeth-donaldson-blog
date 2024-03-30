@@ -10,8 +10,8 @@
 	const body = data.post?.Body as unknown as richTextBlock[];
 	const background_image = strapi_url + data.post?.cover?.data?.attributes.url;
 	const tags = data.post?.tags?.split(',') || [];
-	const project = data.post?.project?.data.attributes.slug || "";
-	const project_name = data.post?.project?.data.attributes.name || "";
+	const project = data.post?.project?.data?.attributes?.slug || "";
+	const project_name = data.post?.project?.data?.attributes?.name || "";
 </script>
 <div class="post">
 	{#if background_image}
@@ -28,9 +28,9 @@
 				<Tag tagName={tag}/>
 			{/each}
 		</div>
-		<h3>
+		<div class="last-updated">
 			{"Last Updated: "+(formatTZDate(data.post?.updatedAt?.toLocaleString()||""))}
-		</h3>
+		</div>
 	</div>
 	<PostBody content={body}/>
 </div>
@@ -45,8 +45,8 @@
 		/* min-height: 100%; Ensure the post takes at least the full height of the viewport */
 		border-radius: 8px;
 		background-color: var(--secondary-bg);
-		min-width: 65%;
-		max-width: 95%;
+		min-width: 65vw;
+		max-width: 95vw;
 		z-index: 0;
 	}
 	.heading h1 {
@@ -54,8 +54,12 @@
 		font-size: 3em;
 		margin-left: 1em;
 	}
-	.heading h3 {
+	.last-updated {
 		margin-right: 1em;
+		word-wrap: break-word;
+		max-width:70%;
+		color: var(--accent-color-tertiary);
+		margin-bottom: 1em;
 	}
 	.heading {
 		width: 100%;
@@ -84,5 +88,11 @@
 		display:flex;
 		flex-direction: row;
 		align-items: baseline;
+	}
+
+	@media screen and (max-width: 800px) {
+		.heading {
+			flex-direction: column;
+		}
 	}
 </style>

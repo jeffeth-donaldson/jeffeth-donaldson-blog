@@ -8,11 +8,11 @@
 <style lang="postcss">
     .post-body {
         background-color: var(--tertiary-bg);
-        padding: 20px;
+        padding: 2.5vw;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         transition: background 0.3s;
-        width: 95%;
+        width:90vw;
         font-size: 1.1em;
     }
 
@@ -30,6 +30,9 @@
 		justify-content: center;
 		align-items: center;
         width: 100%;
+    }
+    :global(.post-body .image img) {
+        max-width: 100%;
     }
 
     :global(.post-body .rich-text-quote) {

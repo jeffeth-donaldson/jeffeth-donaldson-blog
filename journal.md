@@ -124,3 +124,7 @@ Today I finished the desktop site! Hooray! Except I forgot to have the article l
 ## 3/28/24
 
 Today I was feeling a bit sick so I didn't work too much on the site. I did have articles (very lazily) link back to the project they are a part of. I also finished the mobile site views for the posts and projects pages. I realize now I should have made those pages mostly a component, but I didn't oh well. Next time I can work on the About Me page if I want an easy job, or I can work on the posts/project page if I want a hard job.
+
+## 3/30/24
+
+Today is an exciting day because it is the day I finished the frontend! I got the mobile views for all the rest of the pages finished. I also added a favicon. Next time I'll work on deploying my app to my oracle vm.

@@ -43,7 +43,7 @@
 					{/if}
 				</div>
 			</div>
-			<div>
+			<div class="info">
 				<p class="description">{description}</p>
 				{#if posts.length > 0}
 				<div class="articles">
@@ -74,9 +74,10 @@
 	}
 	.thumbnail-container {
 		display:flex;
-		justify-content:center;
+		align-items:center;
 		flex-direction:column;
 		padding:1em;
+		max-width: 100%;
 	}
 	.articles {
 		padding-top: 0.5em;
@@ -145,10 +146,50 @@
 		align-items: center;
 		margin: 1em;
 		margin-left: 5em;
-		width: 100%;
+		max-width: 100%;
 	}
 	.tags a {
 		margin-left: 2em;
 		font-size: xx-large;
+	}
+	@media screen and (max-width: 800px) {
+		.heading {
+			flex-direction: column;
+			max-width: 95%;
+			/* margin-left: 1em; */
+			padding:0;
+		}
+		.heading h1 {
+			margin-left: 0;
+		}
+		.content {
+			flex-direction: column;
+		}
+		.tags {
+			flex-wrap: wrap;
+			max-width: 100%;
+			margin-left: 1em;
+		}
+		.content {
+			max-width: 100%;
+		}
+		img {
+			max-width: 100%;
+			margin:0;
+		}
+		.info {
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			padding-left: 1em;
+		}
+		.articles {
+			display:flex;
+			align-items: center;
+			flex-direction: column;
+		}
+		.articles h2 {
+			margin:0;
+		}
 	}
 </style>

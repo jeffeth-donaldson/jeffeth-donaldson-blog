@@ -56,7 +56,9 @@ const tags = post.attributes.tags?.split(',').sort() || []
     </div>
     <div class="post-thumbnail-content">
         <div class="post-thumbnail-image">
+            {#if cover_image_url}
             <img src={strapi_url + cover_image_url} alt={cover_image_alt} />
+            {/if}
         </div>
         <div class="post-thumbnail-text">
             <p>{postSummary}</p>
