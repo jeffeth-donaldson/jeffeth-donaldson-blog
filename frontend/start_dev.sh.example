@@ -1,0 +1,5 @@
+export PUBLIC_STRAPI_URL=<your_strapi_url>
+export PUBLIC_GITHUB_URL=<your_url>
+export STRAPI_KEY=<your_key>
+
+yarn run dev
