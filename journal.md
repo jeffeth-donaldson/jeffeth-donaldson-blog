@@ -128,3 +128,8 @@ Today I was feeling a bit sick so I didn't work too much on the site. I did have
 ## 3/30/24
 
 Today is an exciting day because it is the day I finished the frontend! I got the mobile views for all the rest of the pages finished. I also added a favicon. Next time I'll work on deploying my app to my oracle vm.
+
+## 4/25/24
+
+Alright so some unfortunate news on the hosting front. I can't seem to get a free oracle vm that is powerful enough to build my strapi backend. So after thinking about it some, I don't really need a backend. I can just hardcode the page content. I can write articles and store them in some kind of text format. Then I can build the pages statically and host them on something like github pages. I'm thinking that's probably what I'll do. But I'll keep trying to get a larger vm from our good friends at oracle.
+
