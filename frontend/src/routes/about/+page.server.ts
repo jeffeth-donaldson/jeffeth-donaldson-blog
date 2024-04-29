@@ -1,11 +1,12 @@
 import { error } from '@sveltejs/kit';
 import { strapi_key } from '$lib/server/secrets.js';
 import type { APIResponseCollection } from "$lib/types/types.js";
+import { strapi_url } from '$lib/client/constants';
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ fetch }) {
     const query = `api/about?populate=*`
-	const res = await fetch(`http://localhost:1337/${query}`,
+	const res = await fetch(`http://${strapi_url}/${query}`,
     {
         headers:{'Authorization':`Bearer ${strapi_key}`}
     });

@@ -1,6 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { strapi_key } from '$lib/server/secrets.js';
 import type { APIResponseCollection } from "$lib/types/types.js";
+import { strapi_url } from '$lib/client/constants';
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ fetch, url }) {
@@ -40,7 +41,7 @@ export async function load({ fetch, url }) {
         }
     }
     const query = `api/blog-posts?sort[0]=${sort}&filters[$and][0][$or][0][slug][$containsi]=${search}&filters[$and][0][$or][1][Title][$containsi]=${search}&filters[$and][0][$or][2][Body][$containsi]=${search}${tagsQuery}&pagination[pageSize]=${pageSize}&pagination[page]=${page}&populate=*`
-	const res = await fetch(`http://localhost:1337/${query}`,
+	const res = await fetch(`http://${strapi_url}/${query}`,
     {
         headers:{'Authorization':`Bearer ${strapi_key}`}
     });

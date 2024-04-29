@@ -1,3 +1,4 @@
+import { strapi_url } from '$lib/client/constants';
 import { strapi_key } from '$lib/server/secrets.js';
 import type { APIResponseCollection } from "$lib/types/types.js";
 
@@ -8,7 +9,7 @@ export async function load({ fetch }) {
     const sort = "updatedAt:desc";
 
     const postQuery = `api/blog-posts?sort[0]=${sort}&pagination[pageSize]=${pageSize}&pagination[page]=${page}&populate=*`
-	const postRes = await fetch(`http://localhost:1337/${postQuery}`,
+	const postRes = await fetch(`http://${strapi_url}/${postQuery}`,
     {
         headers:{'Authorization':`Bearer ${strapi_key}`}
     });
@@ -18,7 +19,7 @@ export async function load({ fetch }) {
     }
 
     const projectQuery = `api/projects?sort[0]=${sort}&pagination[pageSize]=${pageSize}&pagination[page]=${page}&populate=*`
-	const projectRes = await fetch(`http://localhost:1337/${projectQuery}`,
+	const projectRes = await fetch(`http://${strapi_url}/${projectQuery}`,
     {
         headers:{'Authorization':`Bearer ${strapi_key}`}
     });

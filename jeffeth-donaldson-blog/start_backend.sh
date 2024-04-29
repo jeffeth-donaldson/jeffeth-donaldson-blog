@@ -6,4 +6,4 @@ else
 fi
 
 # Run container
-docker container run -p 1337 -v ./database:/opt/app/.tmp -it joshuamcc/jeffeth-donaldson-blog-strapi:latest
+docker container run -p 1337 -v ./database:/opt/app/.tmp -it joshuamcc/jeffeth-donaldson-blog-strapi:0.0.2
