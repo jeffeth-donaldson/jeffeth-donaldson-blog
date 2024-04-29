@@ -133,3 +133,8 @@ Today is an exciting day because it is the day I finished the frontend! I got th
 
 Alright so some unfortunate news on the hosting front. I can't seem to get a free oracle vm that is powerful enough to build my strapi backend. So after thinking about it some, I don't really need a backend. I can just hardcode the page content. I can write articles and store them in some kind of text format. Then I can build the pages statically and host them on something like github pages. I'm thinking that's probably what I'll do. But I'll keep trying to get a larger vm from our good friends at oracle.
 
+## 4/29/24
+
+Yesterday I made quite a bit of progress but didn't have the chance to log it. So I was able to get strapi to run in a docker container instead of on bare-metal. This allowed me to overcome the hardware constraints that were only used in building the app. Networking was a bit of a challenge. Essentially you need to delete the IPTABLES rules in the ubuntu vms on oracle because they block everything by default. I was able to use the advice in this [reddit thread](https://www.reddit.com/r/oraclecloud/comments/r8lkf7/a_quick_tips_to_people_who_are_having_issue/). Now my strapi is hosted and I am able to log into the admin console.
+
+Today I needed to fix an issue where I had localhost hardcoded as the strapi url instead of using the global one in basically every file -_-. Once I fixed that I was able to get the frontend to build! And it works pretty good, except for one small hiccup. Images won't load because the browser tries to upgrade the connection to the backend to https, which I don't have supported... So I'm going to need to figure that out next so I can get my pictures to load.
