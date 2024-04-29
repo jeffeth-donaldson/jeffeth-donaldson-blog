@@ -9,7 +9,7 @@ export async function load({ fetch }) {
     const sort = "updatedAt:desc";
 
     const postQuery = `api/blog-posts?sort[0]=${sort}&pagination[pageSize]=${pageSize}&pagination[page]=${page}&populate=*`
-	const postRes = await fetch(`http://${strapi_url}/${postQuery}`,
+	const postRes = await fetch(`${strapi_url}/${postQuery}`,
     {
         headers:{'Authorization':`Bearer ${strapi_key}`}
     });
@@ -19,7 +19,7 @@ export async function load({ fetch }) {
     }
 
     const projectQuery = `api/projects?sort[0]=${sort}&pagination[pageSize]=${pageSize}&pagination[page]=${page}&populate=*`
-	const projectRes = await fetch(`http://${strapi_url}/${projectQuery}`,
+	const projectRes = await fetch(`${strapi_url}/${projectQuery}`,
     {
         headers:{'Authorization':`Bearer ${strapi_key}`}
     });

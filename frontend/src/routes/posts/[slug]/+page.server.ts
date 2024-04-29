@@ -5,7 +5,7 @@ import { strapi_url } from '$lib/client/constants';
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ fetch, params }) {
-	const res = await fetch(`http://${strapi_url}/api/blog-posts?filters[slug][$eq]=${params.slug}&populate=*`,
+	const res = await fetch(`${strapi_url}/api/blog-posts?filters[slug][$eq]=${params.slug}&populate=*`,
     {
         headers:{'Authorization':`Bearer ${strapi_key}`}
     });

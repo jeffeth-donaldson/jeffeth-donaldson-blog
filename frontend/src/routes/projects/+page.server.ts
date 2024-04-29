@@ -41,7 +41,7 @@ export async function load({ fetch, url }) {
         }
     }
     const query = `api/projects?sort[0]=${sort}&filters[$and][0][$or][0][slug][$containsi]=${search}&filters[$and][0][$or][1][name][$containsi]=${search}&filters[$and][0][$or][2][description][$containsi]=${search}${tagsQuery}&pagination[pageSize]=${pageSize}&pagination[page]=${page}&populate=*`
-	const res = await fetch(`http://${strapi_url}/${query}`,
+	const res = await fetch(`${strapi_url}/${query}`,
     {
         headers:{'Authorization':`Bearer ${strapi_key}`}
     });
