@@ -138,3 +138,31 @@ Alright so some unfortunate news on the hosting front. I can't seem to get a fre
 Yesterday I made quite a bit of progress but didn't have the chance to log it. So I was able to get strapi to run in a docker container instead of on bare-metal. This allowed me to overcome the hardware constraints that were only used in building the app. Networking was a bit of a challenge. Essentially you need to delete the IPTABLES rules in the ubuntu vms on oracle because they block everything by default. I was able to use the advice in this [reddit thread](https://www.reddit.com/r/oraclecloud/comments/r8lkf7/a_quick_tips_to_people_who_are_having_issue/). Now my strapi is hosted and I am able to log into the admin console.
 
 Today I needed to fix an issue where I had localhost hardcoded as the strapi url instead of using the global one in basically every file -_-. Once I fixed that I was able to get the frontend to build! And it works pretty good, except for one small hiccup. Images won't load because the browser tries to upgrade the connection to the backend to https, which I don't have supported... So I'm going to need to figure that out next so I can get my pictures to load.
+
+## 4/30/24
+
+This is the command that works for allowing stuff
+
+```
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 80 -j ACCEPT
+sudo netfilter-persistent save
+
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 443 -j ACCEPT
+sudo netfilter-persistent save
+```
+
+Today we set up SSL. This is needed so we can load pictures from vercel.
+
+Step 1 was to set up a domain name. Since this isn't necessarily used by people in general I decided to get a free domain name
+Using noip. This is a great service that gives you a free subdomain which is useful for a lot of things, but specifically
+it allows us to set up SSL and bind our IP to a hostname in DNS. You can just do any free name and have it map to your IP.
+Once we do that you should be able to navigate to the site via the new hostname.
+
+Step 2 Now that we have a domain we can set up our reverse proxy, this will let us recieve https traffic (strapi doesn't by default) The easiest way is to use nginx. Here are the [install steps](https://www.digitalocean.com/community/tutorials/nginx-ssl-certificate-https-redirect-errors). Note, only forward port 80 in your definition, step 3 will set up SSL. We will need to change our docker invoke to not publish to 0.0.0.0 but instead 127.0.0.1. And I'm having it listen to port 1337 instead of 80.
+
+Step 3 We need to get a ssl certificate. Certbot is the easiest way to do that. Instructions are [here](https://certbot.eff.org/instructions?ws=nginx&os=ubuntufocal)
+Once this is done we should be able to connect to our page via https instead of http.
+
+Oh I also discovered today that we need to mount the /opt/app/public/uploads dir in our app as a volume since that is where 
+pictures end up. And We need to make sure that we increase the filesize limit in the nginx config so we can upload pictures,
+instructions [here](https://www.cyberciti.biz/faq/linux-unix-bsd-nginx-413-request-entity-too-large/)
