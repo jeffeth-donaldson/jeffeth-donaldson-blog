@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from "./$types";
 	import type { APIResponseData } from "$lib/types/types";
-	import type { image } from "$lib/types/imageTypes"
+	import type { image, imageFormats } from "$lib/types/imageTypes"
 	import { strapi_url } from "$lib/client/constants";
 
 	export let data:PageData;
@@ -47,6 +47,7 @@
 	}
 	.pfp img {
 		border-radius: 5px;
+		max-width: 500px;
 	}
 	.content p {
 		font-size:x-large;
