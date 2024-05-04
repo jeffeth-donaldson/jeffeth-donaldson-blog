@@ -101,4 +101,10 @@
         background-position: 0% 50%;
       }
     }
+	@media screen and (max-width: 800px) {
+		.pfp img {
+			border-radius: 5px;
+			max-width: 80vw;
+		}
+	}
 </style>

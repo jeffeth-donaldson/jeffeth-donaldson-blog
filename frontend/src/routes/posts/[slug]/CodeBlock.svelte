@@ -96,4 +96,9 @@
     .clicked {
         transform: scale(0.95); /* Scale down the button slightly */
     }
+    @media screen and (max-width: 800px) {
+        .code-block {
+            max-width: 85vw;
+        }
+    }
 </style>

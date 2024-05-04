@@ -94,5 +94,8 @@
 		.heading {
 			flex-direction: column;
 		}
+		.heading h1 {
+			font-size:2em;
+		}
 	}
 </style>
