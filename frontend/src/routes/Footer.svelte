@@ -6,6 +6,7 @@
 <footer>
 	<p>Made with 😎 by Joshua McClung</p>
     <a href={github_url}><i class="fa-brands fa-github"></i></a>
+	<script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support me on Ko-fi', '#18a839', 'Q2S62936RC');kofiwidget2.draw();</script> 
 </footer>
 
 <style>
