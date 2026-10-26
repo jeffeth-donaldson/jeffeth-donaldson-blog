@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { APIResponseData } from '$lib/types/types';
-	import type { imageFormats, imageFormat, image } from '$lib/types/imageTypes';
+	import type { imageFormats } from '$lib/types/imageTypes';
 	import { strapi_url } from '$lib/client/constants';
 	import { formatTZDate } from '$lib/client/functions';
-	import type { richTextBlock, textBlock } from '$lib/types/richTextBlock';
+	import { resolve } from '$app/paths';
 	import Tag from '$lib/commonComponents/Tag.svelte';
 
 	export let project: APIResponseData<'api::project.project'>;
@@ -16,37 +16,19 @@
 	let cover_image_alt: string;
 	let cover_image_url: string;
 
-	if (cover_image == undefined) {
-	} else {
+	if (cover_image != undefined) {
 		cover_image_alt = cover_image.alternativeText || '';
 		let formats = cover_image.formats as unknown as imageFormats;
 		cover_image_url = formats.thumbnail.url;
 	}
 
-	const getPostSummary = (blocks: richTextBlock[], summary = '') => {
-		blocks.forEach((element) => {
-			if (summary.length >= 280) {
-				//console.log("return")
-				return summary.slice(0, 280).trimEnd();
-			}
-			if (element.type == 'text') {
-				let text = element as textBlock;
-				summary += text.text + ' ';
-			} else if (element.children.length > 0) {
-				summary = getPostSummary(element.children, summary + ' ');
-				//console.log(summary.length)
-			}
-		});
-		return summary.slice(0, 280).trimEnd();
-	};
-	// Get project summary (first n characters in the project's content)
 	const postSummary = project.attributes.description;
 
 	// Get tags
 	const tags = project.attributes.tags?.split(',').sort() || [];
 </script>
 
-<a href={'/projects/' + project.attributes.slug}>
+<a href={resolve('/projects/[slug]', { slug: project.attributes.slug })}>
 	<div class="project-thumbnail">
 		<div class="project-thumbnail-header">
 			<h1>{project.attributes.name}</h1>
@@ -61,7 +43,7 @@
 				{#if tags.length > 0}
 					<div class="project-thumbnail-tags">
 						Tags:
-						{#each tags as tag}
+						{#each tags as tag (tag)}
 							<Tag tagName={tag || ''} {page} {pageSize} {search} {tagsOther} />
 						{/each}
 					</div>

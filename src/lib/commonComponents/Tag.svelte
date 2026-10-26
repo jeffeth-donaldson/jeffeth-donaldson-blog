@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { generateQueryString } from '$lib/client/functions';
 
 	export let tagName: string;
@@ -9,11 +10,11 @@
 
 	let tags = [tagName, ...tagsOther];
 	tags = [...new Set(tags)];
-	const url = '/posts' + generateQueryString(pageSize, tags, search, page);
+	const query = generateQueryString(pageSize, tags, search, page);
 </script>
 
 <div class="post-thumbnail-tag">
-	<a href={url} data-sveltekit-reload>
+	<a href={resolve(('/posts' + query) as never)} data-sveltekit-reload>
 		{tagName}
 	</a>
 </div>

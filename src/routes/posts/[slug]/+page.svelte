@@ -1,10 +1,10 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { strapi_url } from '$lib/client/constants';
 	import { formatTZDate } from '$lib/client/functions';
 	import type { richTextBlock } from '$lib/types/richTextBlock';
 	import Tag from '$lib/commonComponents/Tag.svelte';
 	/** @type {import('./$types').PageData} */
-	// @ts-ignore
 	import PostBody from './PostBody.svelte';
 	export let data;
 	const body = data.post?.Body as unknown as richTextBlock[];
@@ -21,11 +21,13 @@
 	<div class="heading">
 		<h1 class="sixtyfour">{data.post?.Title}</h1>
 		{#if project}
-			<div>Part of the <a href={'/projects/' + project}>{project_name}</a> project</div>
+			<div>
+				Part of the <a href={resolve('/projects/[slug]', { slug: project })}>{project_name}</a> project
+			</div>
 		{/if}
 		<div class="tags">
 			Tags:
-			{#each tags as tag}
+			{#each tags as tag (tag)}
 				<Tag tagName={tag} />
 			{/each}
 		</div>

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import type { PageData } from './$types';
 	import type { APIResponseData } from '$lib/types/types';
 	import ProjectThumbnail from './ProjectThumbnail.svelte';
@@ -36,10 +37,10 @@
 <div class="search-bar">
 	<h2 class="search-label">Search</h2>
 	<div class="search-items">
-		{#each tags as tag}
+		{#each tags as tag (tag)}
 			{#if tag}
 				<div class="search-item">
-					<a data-sveltekit-reload href={'/projects' + queryPopTag(tag)}
+					<a data-sveltekit-reload href={resolve(('/projects' + queryPopTag(tag)) as never)}
 						><i class="fa-solid fa-x" /></a
 					>
 					<div>tag:{tag}</div>
@@ -48,7 +49,7 @@
 		{/each}
 		{#if search}
 			<div class="search-item">
-				<a data-sveltekit-reload href={'/projects' + queryPopSearch()}
+				<a data-sveltekit-reload href={resolve(('/projects' + queryPopSearch()) as never)}
 					><i class="fa-solid fa-x" /></a
 				>
 				<div>"{search}"</div>
@@ -67,7 +68,7 @@
 	</div>
 </div>
 <div class="projects-box">
-	{#each projects as project}
+	{#each projects as project (project.id)}
 		<ProjectThumbnail {project} tagsOther={tags} {page} {pageSize} {search} />
 	{/each}
 	<Paginator {tags} {search} {pageSize} {pageCount} {page} />

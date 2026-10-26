@@ -7,7 +7,6 @@
 		listBlock,
 		textBlock
 	} from '$lib/types/richTextBlock';
-	import { stringify } from 'postcss';
 	import CodeBlock from './CodeBlock.svelte';
 	import { strapi_url } from '$lib/client/constants';
 
@@ -52,38 +51,38 @@
 	</div>
 {:else if block.type == 'link'}
 	<a href={link.url}>
-		{#each link.children as child}
+		{#each link.children as child (child)}
 			<svelte:self block={child} />
 		{/each}
 	</a>
 {:else if block.type == 'paragraph'}
 	<p>
-		{#each block.children as child}
+		{#each block.children as child (child)}
 			<svelte:self block={child} />
 		{/each}
 	</p>
 {:else if block.type == 'quote'}
 	<div class="rich-text-quote">
-		{#each block.children as child}
+		{#each block.children as child (child)}
 			<div><svelte:self block={child} /></div>
 		{/each}
 	</div>
 {:else if block.type == 'heading'}
 	<svelte:element this={'h' + heading.level}>
-		{#each heading.children as child}
+		{#each heading.children as child (child)}
 			<svelte:self block={child} />
 		{/each}
 	</svelte:element>
 {:else if block.type == 'list'}
 	{#if myList.format == 'ordered'}
 		<ol>
-			{#each myList.children as child}
+			{#each myList.children as child (child)}
 				<svelte:self block={child} />
 			{/each}
 		</ol>
 	{:else}
 		<ul>
-			{#each myList.children as child}
+			{#each myList.children as child (child)}
 				<svelte:self block={child} />
 			{/each}
 		</ul>
@@ -104,7 +103,7 @@
 	{/if}
 {:else if block.type == 'list-item'}
 	<li>
-		{#each block.children as child}
+		{#each block.children as child (child)}
 			<svelte:self block={child} />
 		{/each}
 	</li>

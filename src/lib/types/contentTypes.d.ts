@@ -23,12 +23,12 @@ export interface AdminPermission extends Schema.CollectionType {
 			Attribute.SetMinMaxLength<{
 				minLength: 1;
 			}>;
-		actionParameters: Attribute.JSON & Attribute.DefaultTo<{}>;
+		actionParameters: Attribute.JSON & Attribute.DefaultTo<object>;
 		subject: Attribute.String &
 			Attribute.SetMinMaxLength<{
 				minLength: 1;
 			}>;
-		properties: Attribute.JSON & Attribute.DefaultTo<{}>;
+		properties: Attribute.JSON & Attribute.DefaultTo<object>;
 		conditions: Attribute.JSON & Attribute.DefaultTo<[]>;
 		role: Attribute.Relation<'admin::permission', 'manyToOne', 'admin::role'>;
 		createdAt: Attribute.DateTime;
@@ -782,7 +782,7 @@ export interface ApiProjectProject extends Schema.CollectionType {
 }
 
 declare module '@strapi/types' {
-	export module Shared {
+	export namespace Shared {
 		export interface ContentTypes {
 			'admin::permission': AdminPermission;
 			'admin::user': AdminUser;

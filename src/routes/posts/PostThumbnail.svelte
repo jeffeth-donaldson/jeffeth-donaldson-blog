@@ -1,7 +1,8 @@
 <script lang="ts">
 	import type { APIResponseData } from '$lib/types/types';
-	import type { imageFormats, imageFormat, image } from '$lib/types/imageTypes';
+	import type { imageFormats } from '$lib/types/imageTypes';
 	import { strapi_url } from '$lib/client/constants';
+	import { resolve } from '$app/paths';
 	import { formatTZDate } from '$lib/client/functions';
 	import type { richTextBlock, textBlock } from '$lib/types/richTextBlock';
 	import Tag from '$lib/commonComponents/Tag.svelte';
@@ -16,8 +17,7 @@
 	let cover_image_alt: string;
 	let cover_image_url: string;
 
-	if (cover_image == undefined) {
-	} else {
+	if (cover_image != undefined) {
 		cover_image_alt = cover_image.alternativeText || '';
 		let formats = cover_image.formats as unknown as imageFormats;
 		cover_image_url = formats.thumbnail.url;
@@ -46,7 +46,7 @@
 	const tags = post.attributes.tags?.split(',').sort() || [];
 </script>
 
-<a href={'/posts/' + post.attributes.slug}>
+<a href={resolve('/posts/[slug]', { slug: post.attributes.slug })}>
 	<div class="post-thumbnail">
 		<div class="post-thumbnail-header">
 			<h1>{post.attributes.Title}</h1>
@@ -63,7 +63,7 @@
 				{#if tags.length > 0}
 					<div class="post-thumbnail-tags">
 						Tags:
-						{#each tags as tag}
+						{#each tags as tag (tag)}
 							<Tag tagName={tag || ''} {page} {pageSize} {search} {tagsOther} />
 						{/each}
 					</div>

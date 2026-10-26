@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import type { APIResponseData } from '$lib/types/types';
 	import type { PageData } from './$types';
 	import PostThumbnail from './posts/PostThumbnail.svelte';
@@ -40,22 +41,22 @@
 		</p>
 	</div>
 	<div class="body-links sixtyfour">
-		<a href="/posts">Posts</a>
-		<a href="/projects">Projects</a>
-		<a href="/about">About</a>
+		<a href={resolve('/posts')}>Posts</a>
+		<a href={resolve('/projects')}>Projects</a>
+		<a href={resolve('/about')}>About</a>
 	</div>
 	<div>
 		<h2 class="check-this-out">Check this out:</h2>
 		<div class="body-check-this-out">
 			<div class="posts">
 				<h2>Recent Posts</h2>
-				{#each posts as post}
+				{#each posts as post (post.id)}
 					<PostThumbnail {post} />
 				{/each}
 			</div>
 			<div class="projects">
 				<h2>Recent Projects</h2>
-				{#each projects as project}
+				{#each projects as project (project.id)}
 					<ProjectThumbnail {project} />
 				{/each}
 			</div>

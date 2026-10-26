@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import type { PageData } from './$types';
 	import type { APIResponseData } from '$lib/types/types';
 	import PostThumbnail from './PostThumbnail.svelte';
@@ -36,10 +37,11 @@
 <div class="search-bar">
 	<h2 class="search-label">Search</h2>
 	<div class="search-items">
-		{#each tags as tag}
+		{#each tags as tag (tag)}
 			{#if tag}
 				<div class="search-item">
-					<a data-sveltekit-reload href={'/posts' + queryPopTag(tag)}><i class="fa-solid fa-x" /></a
+					<a data-sveltekit-reload href={resolve(('/posts' + queryPopTag(tag)) as never)}
+						><i class="fa-solid fa-x" /></a
 					>
 					<div>tag:{tag}</div>
 				</div>
@@ -47,7 +49,9 @@
 		{/each}
 		{#if search}
 			<div class="search-item">
-				<a data-sveltekit-reload href={'/posts' + queryPopSearch()}><i class="fa-solid fa-x" /></a>
+				<a data-sveltekit-reload href={resolve(('/posts' + queryPopSearch()) as never)}
+					><i class="fa-solid fa-x" /></a
+				>
 				<div>"{search}"</div>
 			</div>
 		{/if}
@@ -64,7 +68,7 @@
 	</div>
 </div>
 <div class="posts-box">
-	{#each posts as post}
+	{#each posts as post (post.id)}
 		<PostThumbnail {post} tagsOther={tags} {page} {pageSize} {search} />
 	{/each}
 	<Paginator {tags} {search} {pageSize} pageCount={pageCount + ''} {page} />

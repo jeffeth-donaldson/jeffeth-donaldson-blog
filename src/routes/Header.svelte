@@ -1,15 +1,16 @@
 <script>
+	import { resolve } from '$app/paths';
 </script>
 
 <header>
 	<div class="padding">
-		<a class="sixtyfour home" href="/">JoshTech Blog</a>
+		<a class="sixtyfour home" href={resolve('/')}>JoshTech Blog</a>
 	</div>
 	<nav>
-		<a href="/">Home</a>
-		<a href="/projects">Projects</a>
-		<a href="/about">About Me</a>
-		<a href="/posts">Posts</a>
+		<a href={resolve('/')}>Home</a>
+		<a href={resolve('/projects')}>Projects</a>
+		<a href={resolve('/about')}>About Me</a>
+		<a href={resolve('/posts')}>Posts</a>
 	</nav>
 	<div class="padding" />
 </header>

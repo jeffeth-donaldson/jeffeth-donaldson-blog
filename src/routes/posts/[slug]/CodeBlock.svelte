@@ -50,6 +50,7 @@
 
 <svelte:head>
 	{#if colorScheme == 'dark'}
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html monokai}
 	{/if}
 </svelte:head>

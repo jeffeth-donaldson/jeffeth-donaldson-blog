@@ -36,7 +36,7 @@
 				{/if}
 				<div class="tags">
 					Tags:
-					{#each tags as tag}
+					{#each tags as tag (tag)}
 						<Tag tagName={tag} />
 					{/each}
 					{#if github}
@@ -51,7 +51,7 @@
 						<h2>Posts About Project:</h2>
 						<div class="scroll-container">
 							<div class="thumbnail-container">
-								{#each posts as post}
+								{#each posts as post (post.id)}
 									<PostThumbnail {post} />
 								{/each}
 							</div>

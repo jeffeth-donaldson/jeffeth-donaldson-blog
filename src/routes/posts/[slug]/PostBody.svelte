@@ -7,7 +7,7 @@
 <!-- <div class="post-body" contenteditable="false" bind:innerHTML={res}></div> -->
 
 <div class="post-body">
-	{#each content as block}
+	{#each content as block (block)}
 		<RichTextBlock {block} />
 	{/each}
 </div>

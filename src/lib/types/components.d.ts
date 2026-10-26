@@ -13,7 +13,7 @@ export interface MetadataTags extends Schema.Component {
 }
 
 declare module '@strapi/types' {
-	export module Shared {
+	export namespace Shared {
 		export interface Components {
 			'metadata.tags': MetadataTags;
 		}

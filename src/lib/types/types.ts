@@ -27,18 +27,20 @@ export type GetValues<TSchemaUID extends Common.UID.Schema> = {
 	: never;
 
 type RelationValue<TAttribute extends Attribute.Attribute> =
-	TAttribute extends Attribute.Relation<infer _TOrigin, infer TRelationKind, infer TTarget>
-		? Utils.Expression.MatchFirst<
-				[
+	TAttribute extends Attribute.Relation<infer TOrigin, infer TRelationKind, infer TTarget>
+		? TOrigin extends Common.UID.Schema
+			? Utils.Expression.MatchFirst<
 					[
-						Utils.Expression.Extends<TRelationKind, Attribute.RelationKind.WithTarget>,
-						TRelationKind extends `${string}ToMany`
-							? Omit<APIResponseCollection<TTarget>, 'meta'>
-							: APIResponse<TTarget> | null
-					]
-				],
-				`TODO: handle other relation kind (${TRelationKind})`
-			>
+						[
+							Utils.Expression.Extends<TRelationKind, Attribute.RelationKind.WithTarget>,
+							TRelationKind extends `${string}ToMany`
+								? Omit<APIResponseCollection<TTarget>, 'meta'>
+								: APIResponse<TTarget> | null
+						]
+					],
+					`TODO: handle other relation kind (${TRelationKind})`
+				>
+			: never
 		: never;
 
 type ComponentValue<TAttribute extends Attribute.Attribute> =
@@ -63,12 +65,14 @@ type DynamicZoneValue<TAttribute extends Attribute.Attribute> =
 		: never;
 
 type MediaValue<TAttribute extends Attribute.Attribute> =
-	TAttribute extends Attribute.Media<infer _TKind, infer TMultiple>
-		? Utils.Expression.If<
-				TMultiple,
-				APIResponseCollection<'plugin::upload.file'>,
-				APIResponse<'plugin::upload.file'> | null
-			>
+	TAttribute extends Attribute.Media<infer TKind, infer TMultiple>
+		? TKind extends Attribute.MediaKind
+			? Utils.Expression.If<
+					TMultiple,
+					APIResponseCollection<'plugin::upload.file'>,
+					APIResponse<'plugin::upload.file'> | null
+				>
+			: never
 		: never;
 
 export type GetValue<TAttribute extends Attribute.Attribute> = Utils.Expression.If<
