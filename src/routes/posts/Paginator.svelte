@@ -1,14 +1,22 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { generateQueryString } from '$lib/client/functions';
+	import { generateQueryString } from '#lib/client/functions';
 
-	export let tags: string[] = [];
-	export let search = '';
-	export let pageSize: string;
-	export let pageCount: string;
-	export let page: string;
-	const pageNum = parseInt(page);
-	const pageCountNum = parseInt(pageCount);
+	let {
+		tags = [],
+		search = '',
+		pageSize,
+		pageCount,
+		page
+	}: {
+		tags?: string[];
+		search?: string;
+		pageSize: string;
+		pageCount: string;
+		page: string;
+	} = $props();
+	const pageNum = $derived(parseInt(page));
+	const pageCountNum = $derived(parseInt(pageCount));
 </script>
 
 <div class="paginator">

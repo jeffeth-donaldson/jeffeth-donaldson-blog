@@ -1,57 +1,51 @@
 <script lang="ts">
-	import { strapi_url } from '$lib/client/constants';
-	import { formatTZDate } from '$lib/client/functions';
-	import Tag from '$lib/commonComponents/Tag.svelte';
+	import { getPostsForProject, getProject, toSummary } from '#lib/content';
+	import Tag from '#lib/commonComponents/Tag.svelte';
 	import type { PageData } from './$types';
-	import type { imageFormats } from '$lib/types/imageTypes';
 	import PostThumbnail from '../../posts/PostThumbnail.svelte';
-	export let data: PageData;
-	const description = data.project?.description;
-	const image_formats = data.project?.icon?.data?.attributes.formats as unknown as imageFormats;
-	const image = image_formats.small;
-	const image_url = strapi_url + image.url;
-	// const image_url = false;
-	const image_alt = data.project?.icon?.data?.attributes.alternativeText;
-
-	const tags = data.project?.tags?.split(',') || [];
-	const name = data.project?.name || '';
-	const github = data.project?.repository_url || '';
-	const posts = data.project?.blog_posts?.data || [];
+	let { data }: { data: PageData } = $props();
+	const project = $derived(getProject(data.slug));
+	const Content = $derived(project?.component);
+	const posts = $derived(getPostsForProject(data.slug).map(toSummary));
 </script>
+
+<svelte:head>
+	<title>{data.title}</title>
+	<meta name="description" content={data.description} />
+</svelte:head>
 
 <div class="container">
 	<div class="project">
 		<div class="heading">
-			<h1 class="sixtyfour">{name}</h1>
+			<h1 class="sixtyfour">{data.title}</h1>
 			<h3>
-				{'Last Updated: ' + formatTZDate(data.project?.updatedAt?.toLocaleString() || '')}
+				{'Published: ' + data.date}
 			</h3>
 		</div>
 		<div class="content">
 			<div>
-				{#if image_url}
-					<img src={image_url} alt={image_alt} />
-				{:else}
-					<div class="image-placeholder" />
-				{/if}
+				<div class="image-placeholder">{data.title.slice(0, 1)}</div>
 				<div class="tags">
 					Tags:
-					{#each tags as tag (tag)}
+					{#each data.tags as tag (tag)}
 						<Tag tagName={tag} />
 					{/each}
-					{#if github}
-						<a href={github}><i class="fa-brands fa-github" /></a>
+					{#if data.github}
+						<a href={'#' + data.github} aria-label="Github"><i class="fa-brands fa-github"></i></a>
 					{/if}
 				</div>
 			</div>
 			<div class="info">
-				<p class="description">{description}</p>
+				<p class="description">{data.description}</p>
+				{#if Content}
+					<div class="project-body"><Content /></div>
+				{/if}
 				{#if posts.length > 0}
 					<div class="articles">
 						<h2>Posts About Project:</h2>
 						<div class="scroll-container">
 							<div class="thumbnail-container">
-								{#each posts as post (post.id)}
+								{#each posts as post (post.slug)}
 									<PostThumbnail {post} />
 								{/each}
 							</div>

@@ -1,20 +1,26 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
-	import { generateQueryString } from '$lib/client/functions';
+	import { generateQueryString } from '#lib/client/functions';
 
-	export let tagName: string;
-	export let tagsOther: string[] = [];
-	export let search = '';
-	export let pageSize = '';
-	export let page = '';
+	let {
+		tagName,
+		tagsOther = [],
+		search = '',
+		pageSize = '',
+		page = ''
+	}: {
+		tagName: string;
+		tagsOther?: string[];
+		search?: string;
+		pageSize?: string;
+		page?: string;
+	} = $props();
 
-	let tags = [tagName, ...tagsOther];
-	tags = [...new Set(tags)];
-	const query = generateQueryString(pageSize, tags, search, page);
+	const tags = $derived([...new Set([tagName, ...tagsOther])]);
+	const query = $derived(generateQueryString(pageSize, tags, search, page));
 </script>
 
 <div class="post-thumbnail-tag">
-	<a href={resolve(('/posts' + query) as never)} data-sveltekit-reload>
+	<a href={'#/posts' + query} data-sveltekit-reload>
 		{tagName}
 	</a>
 </div>

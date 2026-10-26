@@ -1,14 +1,5 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-	import type { APIResponseData } from '$lib/types/types';
-	import type { image } from '$lib/types/imageTypes';
-	import { strapi_url } from '$lib/client/constants';
-
-	export let data: PageData;
-	const about = data.about as unknown as APIResponseData<'api::about.about'>;
-	const bio = about.attributes.Bio || "UwU-psies!! The bio didn't load 😫";
-	const img = about.attributes.avatar?.data.attributes as unknown as image;
-	console.log(img);
+	import headshot from '../../lib/assets/headshot.jpg';
 </script>
 
 <svelte:head>
@@ -22,32 +13,48 @@
 	</div>
 	<div class="content-spacer">
 		<div class="content">
-			<div class="pfp">
-				<img src={strapi_url + img.url} alt={img.alternativeText} />
+			<h2>Nice to meet you! I'm Josh McClung</h2>
+			<div class="sub-content">
+				<enhanced:img class="pfp" src={headshot} alt="Me" />
+				<p>
+					Hi! I'm a software developer who enjoys beaches, nature, and warm weather. I Graduated
+					with a BS in Computer Science in 2023 and I love technology. I currently work as a MLOps
+					Engineer, but I've also worked in fullstack web development, as well as Devops and Test
+					Automation. I'm familiar with quite a few languages, but the one I probably end up using
+					the most is python. The point of this blog is to document my experiences working on
+					projects and hopefully guide a few lost souls on their development journeys! While I'll
+					mostly be focused on software development, you'll probably hear me talk about mechanical
+					keyboards, home automation, hobby electronics, and games from time to time.
+				</p>
 			</div>
-			<h2>
-				Nice to meet you! I'm {about.attributes.Name}
-			</h2>
-			<p>
-				{bio}
-			</p>
 		</div>
 	</div>
 </div>
 
 <style>
+	.sub-content {
+		display: flex;
+		padding: 2em;
+	}
+	.sub-content p {
+		margin: 1em;
+	}
+	.pfp {
+		width: clamp(120px, 18vw, 280px);
+		flex: 0 0 auto;
+		height: auto;
+		border-radius: 1rem;
+	}
+	:global(.pfp img) {
+		display: block;
+		width: 100%;
+		height: auto;
+		object-fit: contain;
+	}
 	.content-spacer {
 		display: flex;
 		justify-content: space-around;
 		min-height: 60vh;
-	}
-	.pfp {
-		float: left;
-		margin: 1em;
-	}
-	.pfp img {
-		border-radius: 5px;
-		max-width: 500px;
 	}
 	.content p {
 		font-size: x-large;
@@ -59,6 +66,7 @@
 		border-radius: 10px;
 		width: 95%;
 		height: fit-content;
+		padding: 1em;
 	}
 	.about-container {
 		background-color: var(--secondary-bg);
@@ -72,7 +80,6 @@
 	}
 
 	.title {
-		/* background: linear-gradient(45deg, #836901, #8a3652, #1a4d80, #358650); */
 		background: linear-gradient(
 			45deg,
 			var(--accent-color-primary),
@@ -100,12 +107,6 @@
 		}
 		100% {
 			background-position: 0% 50%;
-		}
-	}
-	@media screen and (max-width: 800px) {
-		.pfp img {
-			border-radius: 5px;
-			max-width: 80vw;
 		}
 	}
 </style>

@@ -1,44 +1,47 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { strapi_url } from '$lib/client/constants';
-	import { formatTZDate } from '$lib/client/functions';
-	import type { richTextBlock } from '$lib/types/richTextBlock';
-	import Tag from '$lib/commonComponents/Tag.svelte';
-	/** @type {import('./$types').PageData} */
-	import PostBody from './PostBody.svelte';
-	export let data;
-	const body = data.post?.Body as unknown as richTextBlock[];
-	const background_image = strapi_url + data.post?.cover?.data?.attributes.url;
-	const tags = data.post?.tags?.split(',') || [];
-	const project = data.post?.project?.data?.attributes?.slug || '';
-	const project_name = data.post?.project?.data?.attributes?.name || '';
+	import { getPost } from '#lib/content';
+	import Tag from '#lib/commonComponents/Tag.svelte';
+	import type { PageData } from './$types';
+	let { data }: { data: PageData } = $props();
+	const post = $derived(getPost(data.slug));
+	const Content = $derived(post?.component);
 </script>
 
+<svelte:head>
+	<title>{data.title}</title>
+	<meta name="description" content={data.description} />
+</svelte:head>
+
 <div class="post">
-	{#if background_image}
-		<div class="background-image" style="background-image: url({background_image});" />
+	{#if data.banner}
+		<enhanced:img class="background-image" src={data.banner} alt="banner" />
 	{/if}
 	<div class="heading">
-		<h1 class="sixtyfour">{data.post?.Title}</h1>
-		{#if project}
+		<h1 class="sixtyfour">{data.title}</h1>
+		{#if data.project}
 			<div>
-				Part of the <a href={resolve('/projects/[slug]', { slug: project })}>{project_name}</a> project
+				Part of the <a href={resolve('/projects/[slug]', { slug: data.project })}>{data.project}</a>
 			</div>
 		{/if}
 		<div class="tags">
 			Tags:
-			{#each tags as tag (tag)}
+			{#each data.tags as tag (tag)}
 				<Tag tagName={tag} />
 			{/each}
 		</div>
 		<div class="last-updated">
-			{'Last Updated: ' + formatTZDate(data.post?.updatedAt?.toLocaleString() || '')}
+			{'Published: ' + data.date}
 		</div>
 	</div>
-	<PostBody content={body} />
+	<div class="post-body">
+		{#if Content}
+			<Content />
+		{/if}
+	</div>
 </div>
 
-<style lang="postcss">
+<style>
 	.post {
 		position: relative;
 		display: flex;

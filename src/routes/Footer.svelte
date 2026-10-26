@@ -1,17 +1,11 @@
 <script>
-	import { github_url } from '$lib/client/constants';
+	import { github_url } from '#lib/client/constants';
 </script>
 
 <footer>
 	<p>Made with 😎 by Joshua McClung</p>
-	<a href={github_url}><i class="fa-brands fa-github" /></a>
-	<script
-		type="text/javascript"
-		src="https://storage.ko-fi.com/cdn/widget/Widget_2.js"
-	></script><script type="text/javascript">
-		kofiwidget2.init('Support me on Ko-fi', '#313231', 'Q2S62936RC');
-		kofiwidget2.draw();
-	</script>
+	<a href={`#/${github_url}`} aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+	<a href="https://ko-fi.com/Q2S62936RC">Support me on Ko-fi</a>
 </footer>
 
 <style>

@@ -1,65 +1,42 @@
 <script lang="ts">
-	import type { APIResponseData } from '$lib/types/types';
-	import type { imageFormats } from '$lib/types/imageTypes';
-	import { strapi_url } from '$lib/client/constants';
+	import type { ContentSummary } from '#lib/content';
 	import { resolve } from '$app/paths';
-	import { formatTZDate } from '$lib/client/functions';
-	import type { richTextBlock, textBlock } from '$lib/types/richTextBlock';
-	import Tag from '$lib/commonComponents/Tag.svelte';
+	import Tag from '#lib/commonComponents/Tag.svelte';
 
-	export let post: APIResponseData<'api::blog-post.blog-post'>;
-	export let tagsOther: string[] = [];
-	export let search: string = '';
-	export let pageSize: string = '';
-	export let page: string = '';
+	let {
+		post,
+		tagsOther = [],
+		search = '',
+		pageSize = '',
+		page = ''
+	}: {
+		post: ContentSummary;
+		tagsOther?: string[];
+		search?: string;
+		pageSize?: string;
+		page?: string;
+	} = $props();
 
-	let cover_image = post.attributes.cover?.data?.attributes;
-	let cover_image_alt: string;
-	let cover_image_url: string;
-
-	if (cover_image != undefined) {
-		cover_image_alt = cover_image.alternativeText || '';
-		let formats = cover_image.formats as unknown as imageFormats;
-		cover_image_url = formats.thumbnail.url;
-	}
-
-	const getPostSummary = (blocks: richTextBlock[], summary = '') => {
-		blocks.forEach((element) => {
-			if (summary.length >= 280) {
-				//console.log("return")
-				return summary.slice(0, 280).trimEnd();
-			}
-			if (element.type == 'text') {
-				let text = element as textBlock;
-				summary += text.text + ' ';
-			} else if (element.children.length > 0) {
-				summary = getPostSummary(element.children, summary + ' ');
-				//console.log(summary.length)
-			}
-		});
-		return summary.slice(0, 280).trimEnd();
-	};
-	// Get Post summary (first n characters in the post's content)
-	const postSummary = getPostSummary(post.attributes.Body as unknown as richTextBlock[]) + '...';
-
-	// Get tags
-	const tags = post.attributes.tags?.split(',').sort() || [];
+	const tags = $derived(post.tags || []);
 </script>
 
-<a href={resolve('/posts/[slug]', { slug: post.attributes.slug })}>
+<div class="post-thumbnail-link">
+	<a
+		class="post-thumbnail-card-link"
+		href={resolve('/posts/[slug]', { slug: post.slug })}
+		aria-label={post.title}
+	/>
 	<div class="post-thumbnail">
 		<div class="post-thumbnail-header">
-			<h1>{post.attributes.Title}</h1>
-			<h4>{formatTZDate(post.attributes.updatedAt?.toLocaleString() || '')}</h4>
+			<h1>{post.title}</h1>
+			<h4>{post.date}</h4>
 		</div>
 		<div class="post-thumbnail-content">
 			<div class="post-thumbnail-image">
-				{#if cover_image_url}
-					<img src={strapi_url + cover_image_url} alt={cover_image_alt} />
-				{/if}
+				<span>{post.title.slice(0, 1)}</span>
 			</div>
 			<div class="post-thumbnail-text">
-				<p>{postSummary}</p>
+				<p>{post.description}</p>
 				{#if tags.length > 0}
 					<div class="post-thumbnail-tags">
 						Tags:
@@ -71,7 +48,7 @@
 			</div>
 		</div>
 	</div>
-</a>
+</div>
 
 <style>
 	.post-thumbnail {
@@ -88,12 +65,36 @@
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 	}
 
-	a {
+	.post-thumbnail-link {
+		position: relative;
+		margin-top: 1em;
+		width: 95%;
+		display: flex;
+	}
+
+	.post-thumbnail-card-link {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+	}
+
+	.post-thumbnail {
+		position: relative;
+		z-index: 1;
+		width: 100%;
+		pointer-events: none;
+	}
+
+	.post-thumbnail-tags {
+		position: relative;
+		z-index: 2;
+		pointer-events: auto;
+	}
+
+	.post-thumbnail-card-link {
 		margin-top: 1em;
 		text-decoration: none;
 		color: inherit;
-		width: 95%;
-		display: flex;
 	}
 
 	.post-thumbnail-header h1 {
@@ -152,7 +153,7 @@
 		.post-thumbnail-header h4 {
 			margin: 0px;
 		}
-		a {
+		.post-thumbnail-link {
 			max-width: 95vw;
 			margin-left: 1em;
 			margin-right: 1em;

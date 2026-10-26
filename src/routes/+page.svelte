@@ -1,22 +1,12 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import type { APIResponseData } from '$lib/types/types';
+	import type { ContentSummary } from '#lib/content';
 	import type { PageData } from './$types';
 	import PostThumbnail from './posts/PostThumbnail.svelte';
 	import ProjectThumbnail from './projects/ProjectThumbnail.svelte';
-	export let data: PageData;
-	let posts: APIResponseData<'api::blog-post.blog-post'>[];
-	let projects: APIResponseData<'api::project.project'>[];
-	if (data.posts == undefined) {
-		posts = [];
-	} else {
-		posts = data.posts;
-	}
-	if (data.projects == undefined) {
-		projects = [];
-	} else {
-		projects = data.projects;
-	}
+	let { data }: { data: PageData } = $props();
+	const posts = $derived((data.posts ?? []) as ContentSummary[]);
+	const projects = $derived((data.projects ?? []) as ContentSummary[]);
 </script>
 
 <svelte:head>
@@ -50,13 +40,13 @@
 		<div class="body-check-this-out">
 			<div class="posts">
 				<h2>Recent Posts</h2>
-				{#each posts as post (post.id)}
+				{#each posts as post (post.slug)}
 					<PostThumbnail {post} />
 				{/each}
 			</div>
 			<div class="projects">
 				<h2>Recent Projects</h2>
-				{#each projects as project (project.id)}
+				{#each projects as project (project.slug)}
 					<ProjectThumbnail {project} />
 				{/each}
 			</div>

@@ -1,45 +1,42 @@
 <script lang="ts">
-	import type { APIResponseData } from '$lib/types/types';
-	import type { imageFormats } from '$lib/types/imageTypes';
-	import { strapi_url } from '$lib/client/constants';
-	import { formatTZDate } from '$lib/client/functions';
+	import type { ContentSummary } from '#lib/content';
 	import { resolve } from '$app/paths';
-	import Tag from '$lib/commonComponents/Tag.svelte';
+	import Tag from '#lib/commonComponents/Tag.svelte';
 
-	export let project: APIResponseData<'api::project.project'>;
-	export let tagsOther: string[] = [];
-	export let search: string = '';
-	export let pageSize: string = '';
-	export let page: string = '';
+	let {
+		project,
+		tagsOther = [],
+		search = '',
+		pageSize = '',
+		page = ''
+	}: {
+		project: ContentSummary;
+		tagsOther?: string[];
+		search?: string;
+		pageSize?: string;
+		page?: string;
+	} = $props();
 
-	let cover_image = project.attributes.icon?.data?.attributes;
-	let cover_image_alt: string;
-	let cover_image_url: string;
-
-	if (cover_image != undefined) {
-		cover_image_alt = cover_image.alternativeText || '';
-		let formats = cover_image.formats as unknown as imageFormats;
-		cover_image_url = formats.thumbnail.url;
-	}
-
-	const postSummary = project.attributes.description;
-
-	// Get tags
-	const tags = project.attributes.tags?.split(',').sort() || [];
+	const tags = $derived(project.tags || []);
 </script>
 
-<a href={resolve('/projects/[slug]', { slug: project.attributes.slug })}>
+<div class="project-thumbnail-link">
+	<a
+		class="project-thumbnail-card-link"
+		href={resolve('/projects/[slug]', { slug: project.slug })}
+		aria-label={project.title}
+	/>
 	<div class="project-thumbnail">
 		<div class="project-thumbnail-header">
-			<h1>{project.attributes.name}</h1>
-			<h4>{formatTZDate(project.attributes.updatedAt?.toLocaleString() || '')}</h4>
+			<h1>{project.title}</h1>
+			<h4>{project.date}</h4>
 		</div>
 		<div class="project-thumbnail-content">
 			<div class="project-thumbnail-image">
-				<img src={strapi_url + cover_image_url} alt={cover_image_alt} />
+				<span>{project.title.slice(0, 1)}</span>
 			</div>
 			<div class="project-thumbnail-text">
-				<p>{postSummary}</p>
+				<p>{project.description}</p>
 				{#if tags.length > 0}
 					<div class="project-thumbnail-tags">
 						Tags:
@@ -51,7 +48,7 @@
 			</div>
 		</div>
 	</div>
-</a>
+</div>
 
 <style>
 	.project-thumbnail {
@@ -68,12 +65,36 @@
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 	}
 
-	a {
+	.project-thumbnail-link {
+		position: relative;
+		margin-top: 1em;
+		width: 95%;
+		display: flex;
+	}
+
+	.project-thumbnail-card-link {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+	}
+
+	.project-thumbnail {
+		position: relative;
+		z-index: 1;
+		width: 100%;
+		pointer-events: none;
+	}
+
+	.project-thumbnail-tags {
+		position: relative;
+		z-index: 2;
+		pointer-events: auto;
+	}
+
+	.project-thumbnail-card-link {
 		margin-top: 1em;
 		text-decoration: none;
 		color: inherit;
-		width: 95%;
-		display: flex;
 	}
 
 	.project-thumbnail-header h1 {
@@ -133,7 +154,7 @@
 		.project-thumbnail-header h4 {
 			margin: 0px;
 		}
-		a {
+		.project-thumbnail-link {
 			max-width: 95vw;
 			margin-left: 1em;
 			margin-right: 1em;

@@ -1,25 +1,17 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import type { PageData } from './$types';
-	import type { APIResponseData } from '$lib/types/types';
+	import type { ContentSummary } from '#lib/content';
 	import PostThumbnail from './PostThumbnail.svelte';
-	import { generateQueryString } from '$lib/client/functions';
+	import { generateQueryString } from '#lib/client/functions';
 	import Paginator from './Paginator.svelte';
-	export let data: PageData;
-	let posts: APIResponseData<'api::blog-post.blog-post'>[];
-
-	if (data.posts == undefined) {
-		posts = [];
-	} else {
-		posts = data.posts;
-	}
-
-	let tags = data.tags || [];
-	tags = [...new Set(tags)];
-	let search = data.search || '';
-	let pageSize = data.pageSize || '';
-	let pageCount = data.pageCount || '1';
-	let page = data.page || '1';
+	let { data }: { data: PageData } = $props();
+	const posts = $derived((data.posts ?? []) as ContentSummary[]);
+	const tags = $derived([...new Set(data.tags || [])]);
+	const search = $derived(data.search || '');
+	const pageSize = $derived(data.pageSize || '');
+	const pageCount = $derived(data.pageCount || '1');
+	const page = $derived(data.page || '1');
 
 	const queryPopTag = (tag: string) => {
 		const updatedTags = tags.filter((item) => item !== tag);
@@ -30,7 +22,7 @@
 		return generateQueryString(pageSize, tags, '', page);
 	};
 
-	let searchText = '';
+	let searchText = $state('');
 </script>
 
 <h1>Posts</h1>
@@ -68,7 +60,7 @@
 	</div>
 </div>
 <div class="posts-box">
-	{#each posts as post (post.id)}
+	{#each posts as post (post.slug)}
 		<PostThumbnail {post} tagsOther={tags} {page} {pageSize} {search} />
 	{/each}
 	<Paginator {tags} {search} {pageSize} pageCount={pageCount + ''} {page} />
