@@ -7,6 +7,7 @@ tags:
   - mdsvex
   - typescript
 github: https://github.com/jeffeth-donaldson/jeffeth-donaldson-blog
+banner: 'large_joshtechblog_940bbec9ea.png'
 ---
 
 # JoshTech Blog

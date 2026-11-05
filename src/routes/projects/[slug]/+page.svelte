@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { getPostsForProject, getProject, toSummary } from '#lib/content';
 	import Tag from '#lib/commonComponents/Tag.svelte';
+	import { resolveImage } from '#lib/utils/images';
 	import type { PageData } from './$types';
 	import PostThumbnail from '../../posts/PostThumbnail.svelte';
 	let { data }: { data: PageData } = $props();
 	const project = $derived(getProject(data.slug));
 	const Content = $derived(project?.component);
+	const banner = $derived(resolveImage(project?.banner));
 	const posts = $derived(getPostsForProject(data.slug).map(toSummary));
 </script>
 
@@ -24,7 +26,13 @@
 		</div>
 		<div class="content">
 			<div>
-				<div class="image-placeholder">{data.title.slice(0, 1)}</div>
+				<div class="project-image">
+					{#if banner}
+						<enhanced:img src={banner} alt="" />
+					{:else}
+						<span>{data.title.slice(0, 1)}</span>
+					{/if}
+				</div>
 				<div class="tags">
 					Tags:
 					{#each data.tags as tag (tag)}
@@ -87,19 +95,36 @@
 		margin-top: 0;
 		margin-bottom: 0;
 	}
-	img {
-		margin: 1em;
-	}
+
 	.content {
 		display: flex;
 		flex-direction: row;
 		word-wrap: break-word;
 	}
-	.image-placeholder {
+	.project-image {
 		width: 400px;
 		height: 400px;
+		max-width: 100%;
 		background-color: var(--tertiary-bg);
 		margin: 1em;
+		border-radius: 8px;
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.project-image span {
+		font-size: 6em;
+		font-weight: bold;
+		color: var(--accent-color-primary);
+	}
+
+	.project-image :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
 	}
 	.container {
 		min-height: 85vh;
@@ -168,7 +193,7 @@
 		.content {
 			max-width: 100%;
 		}
-		img {
+		.project-image {
 			max-width: 100%;
 			margin: 0;
 		}

@@ -58,7 +58,8 @@ export const toSummary = (entry: ContentEntry): ContentSummary => ({
 	date: entry.date,
 	tags: entry.tags,
 	...(entry.project ? { project: entry.project } : {}),
-	...(entry.github ? { github: entry.github } : {})
+	...(entry.github ? { github: entry.github } : {}),
+	...(entry.banner ? { banner: entry.banner } : {})
 });
 
 export const filterContent = (

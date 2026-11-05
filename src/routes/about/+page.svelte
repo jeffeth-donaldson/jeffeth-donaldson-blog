@@ -1,5 +1,5 @@
 <script lang="ts">
-	import headshot from '../../lib/assets/headshot.jpg';
+	import headshot from '../../lib/assets/headshot.jpg?enhanced';
 </script>
 
 <svelte:head>

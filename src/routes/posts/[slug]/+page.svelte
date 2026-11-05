@@ -2,10 +2,12 @@
 	import { resolve } from '$app/paths';
 	import { getPost } from '#lib/content';
 	import Tag from '#lib/commonComponents/Tag.svelte';
+	import { resolveImage } from '#lib/utils/images';
 	import type { PageData } from './$types';
 	let { data }: { data: PageData } = $props();
 	const post = $derived(getPost(data.slug));
 	const Content = $derived(post?.component);
+	const banner = $derived(resolveImage(post?.banner));
 </script>
 
 <svelte:head>
@@ -14,8 +16,8 @@
 </svelte:head>
 
 <div class="post">
-	{#if data.banner}
-		<enhanced:img class="background-image" src={data.banner} alt="banner" />
+	{#if banner}
+		<enhanced:img class="background-image" src={banner} alt="" />
 	{/if}
 	<div class="heading">
 		<h1 class="sixtyfour">{data.title}</h1>

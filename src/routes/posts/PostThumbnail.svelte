@@ -2,6 +2,7 @@
 	import type { ContentSummary } from '#lib/content';
 	import { resolve } from '$app/paths';
 	import Tag from '#lib/commonComponents/Tag.svelte';
+	import { resolveImage } from '#lib/utils/images';
 
 	let {
 		post,
@@ -18,6 +19,7 @@
 	} = $props();
 
 	const tags = $derived(post.tags || []);
+	const banner = $derived(resolveImage(post.banner));
 </script>
 
 <div class="post-thumbnail-link">
@@ -33,7 +35,11 @@
 		</div>
 		<div class="post-thumbnail-content">
 			<div class="post-thumbnail-image">
-				<span>{post.title.slice(0, 1)}</span>
+				{#if banner}
+					<enhanced:img src={banner} alt="" loading="lazy" />
+				{:else}
+					<span>{post.title.slice(0, 1)}</span>
+				{/if}
 			</div>
 			<div class="post-thumbnail-text">
 				<p>{post.description}</p>
@@ -114,6 +120,26 @@
 	.post-thumbnail-image {
 		width: 234px;
 		height: 156px;
+		flex: 0 0 auto;
+		border-radius: 8px;
+		overflow: hidden;
+		background-color: var(--secondary-bg);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.post-thumbnail-image span {
+		font-size: 4em;
+		font-weight: bold;
+		color: var(--accent-color-primary);
+	}
+
+	.post-thumbnail-image :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
 	}
 
 	.post-thumbnail-content {
