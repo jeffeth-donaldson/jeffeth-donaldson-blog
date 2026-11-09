@@ -56,6 +56,7 @@
 		min-width: 65vw;
 		max-width: 95vw;
 		z-index: 0;
+		padding: 1em;
 	}
 	.heading h1 {
 		color: var(--accent-color-primary);
