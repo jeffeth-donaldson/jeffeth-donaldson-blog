@@ -4,6 +4,8 @@
 	import Tag from '#lib/commonComponents/Tag.svelte';
 	import { resolveImage } from '#lib/utils/images';
 	import type { PageData } from './$types';
+	import './hopscotch.css';
+
 	let { data }: { data: PageData } = $props();
 	const post = $derived(getPost(data.slug));
 	const Content = $derived(post?.component);

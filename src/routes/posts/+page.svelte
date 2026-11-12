@@ -5,6 +5,7 @@
 	import PostThumbnail from './PostThumbnail.svelte';
 	import { generateQueryString } from '#lib/client/functions';
 	import Paginator from './Paginator.svelte';
+
 	let { data }: { data: PageData } = $props();
 	const posts = $derived((data.posts ?? []) as ContentSummary[]);
 	const tags = $derived([...new Set(data.tags || [])]);

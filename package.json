@@ -37,5 +37,8 @@
 		"#lib": "./src/lib/index.js",
 		"#lib/commonComponents/*.svelte": "./src/lib/commonComponents/*.svelte",
 		"#lib/*": "./src/lib/*.js"
+	},
+	"dependencies": {
+		"svelte-highlight": "^7.23.1"
 	}
 }

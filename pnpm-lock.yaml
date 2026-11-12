@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      svelte-highlight:
+        specifier: ^7.23.1
+        version: 7.23.1
     devDependencies:
       '@eslint/js':
         specifier: ^10.0.1
@@ -1193,6 +1197,9 @@ packages:
       svelte:
         optional: true
 
+  svelte-highlight@7.23.1:
+    resolution: {integrity: sha512-7LAEocg8U4YxPRZhIdc6sCU4Vlum7SBe557Aaz6CD4VlCoHlaYIhFz+663lQJWzSSdj3vgz3sY0wEm1AuknAfw==}
+
   svelte@5.57.2:
     resolution: {integrity: sha512-1YiPCAXT0Ct6g1vOMmSLa0Nsc3QRMvtDF32ihgglGVrugIuIK38RyDiFNXVDhtQ81TJjSO57NdMw6DyYLqSGDQ==}
     engines: {node: '>=18'}
@@ -2377,6 +2384,8 @@ snapshots:
       semver: 7.8.5
     optionalDependencies:
       svelte: 5.57.2(@typescript-eslint/types@8.72.0)
+
+  svelte-highlight@7.23.1: {}
 
   svelte@5.57.2(@typescript-eslint/types@8.72.0):
     dependencies:
